@@ -105,7 +105,7 @@
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + " " + time;
 
-    var realVersion = false;
+    var realVersion = true;
     var jatosVersion = false;
     var instructVersion = Math.round(Math.random()); // 0 = no instructions and 1 = given fake/staged instructions
     console.log(instructVersion);
@@ -1889,17 +1889,17 @@
         fullscreen_mode: true,
       });
       exptTimeline.push(preExposurePreamble);
-      //exptTimeline.push(imagePreExposureProcedure);
-      //exptTimeline.push(NEURinstruction);
-      //exptTimeline.push(NEUR); // STEVE: IF YOU WANT QUESTIONNAIRE AFTER EXP, MOVE IN TIMELINE
-      //exptTimeline.push(loop_initial_instructions);
-      ////exptTimeline.push(ready_to_start_practice);
-      //exptTimeline.push(fadeToBlackTrial);
-      //exptTimeline.push(first_practice_trial_loop);
-      //exptTimeline.push(fadeToWhiteTrial);
-      //exptTimeline.push(instr_before_prac_loop);
-      //exptTimeline.push(fadeToBlackTrial);
-      //exptTimeline.push(loop_practice_trials);
+      exptTimeline.push(imagePreExposureProcedure);
+      exptTimeline.push(NEURinstruction);
+      exptTimeline.push(NEUR); // STEVE: IF YOU WANT QUESTIONNAIRE AFTER EXP, MOVE IN TIMELINE
+      exptTimeline.push(loop_initial_instructions);
+      exptTimeline.push(ready_to_start_practice);
+      exptTimeline.push(fadeToBlackTrial);
+      exptTimeline.push(first_practice_trial_loop);
+      exptTimeline.push(fadeToWhiteTrial);
+      exptTimeline.push(instr_before_prac_loop);
+      exptTimeline.push(fadeToBlackTrial);
+      exptTimeline.push(loop_practice_trials);
       
       exptTimeline.push(loop_RSVPBlocks);
       exptTimeline.push(picResponse)
