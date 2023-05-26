@@ -1695,7 +1695,7 @@
 
     let psychopathy_empathy_item_1_questions = empathyQuestionTexts.map(
       (question) => {
-        return { prompt: question, labels: psychopathyEmpathyAgreementLabels };
+        return { prompt: question, labels: psychopathyEmpathyAgreementLabels, required: true };
       }
     );
 
@@ -1772,16 +1772,16 @@
       "Strongly Agree",
     ];
 
-    let horro_typology_item_1_questions = horrorTypologyQuestions.map(
+    let horror_typology_item_1_questions = horrorTypologyQuestions.map(
       (question) => {
-        return { prompt: question, labels: horrorTypologyAgreementLabels };
+        return { prompt: question, labels: horrorTypologyAgreementLabels, required: true };
       }
     );
 
     const horrorTypologySurveyTrial = {
       type: "survey-likert",
       preamble: horror_typology_item_1_preamble,
-      questions: horro_typology_item_1_questions,
+      questions: horror_typology_item_1_questions,
       randomize_question_order: true,
       on_finish: function (data) {
         data.apprehension = calculateSubscaleScore(subscaleApprehension);
