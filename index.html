@@ -150,7 +150,7 @@
       var feedbackDuration = 1000; // 900
 
       var finalStandardDuration = 100; // 100
-      var finalDistractDuration = 100; // 100
+      var finalDistractDuration = 150; // 100
 
       var pracDurSteps = [500, 250, 150, 100, finalStandardDuration]; //   [500, 250, 150, 100, finalStandardDuration]
       var pracNperstep = 2;
@@ -160,7 +160,8 @@
       var numMemPics = 28; //This is number of mem trials for each negative/neutral condition (not foils).
       var numFoilPics = 9; //This is per emotion condition - so 9 negative + 9 neutral pics left over to act as foils in the memory task [STEVE: CHANGE THIS AS APPROPRIATE FOR MEMORY TEST]
       var memConditionsTotal = 4; //1 = neg old 2 =  neg_foils, 3 = neut old, 4 = neut foils.
-    } else {
+    }
+    /*else {
       var trialsPerDistractCond = 4; //PerBlock How many trials per condition (neut/negative)
       var numDistractConditions = 2; // neut and negative in this experiment
       var trialsPerBaselineType = 2; // PerBlock How many baseline trials
@@ -180,7 +181,7 @@
       var numMemPics = 8; //so 8 each of neg/neutral x old/new
       var numFoilPics = 8; // use 24 negative and 24 neutral pics as foils
       var memConditionsTotal = 4; //1 = neg old 2 =  neg_foils, 3 = neut old, 4 = neut foils.
-    }
+    }*/
 
     var pracStdDur = [];
     var pracDisDur = [];
@@ -776,14 +777,15 @@
       stimulus: function () {
         typeOfBlock = "EIB";
         var tempTextHTML = " ";
-        var reminderText = "<p>Don't forget that the graphic images you see are staged or fake.</p>";
+        var reminderText =
+          "<p>Don't forget that the graphic images you see are staged or fake.</p>";
         if (blockNum > 0) {
           tempTextHTML +=
             "<p>You're doing well!</p><p>" +
             blockNum +
             " of " +
             numBlocksTotal +
-            " blocks completed</p>"; 
+            " blocks completed</p>";
           tempTextHTML += reminderText;
         }
         tempTextHTML += "<br><p>Press any key when you are ready to begin</p>";
@@ -1012,7 +1014,7 @@
         smallFontSize +
         ";margin:" +
         mWidth +
-        ';margin-top:30px;">Approval No 3670</p>' +
+        ';margin-top:30px;">Approval No 3762</p>' +
         '		<p style="text-align:center;"><b>THE UNIVERSITY OF NEW SOUTH WALES<br>' +
         "			PARTICIPANT INFORMATION STATEMENT</b><br><br><b>Media and attention</b><br></p>" +
         '			<p style="text-align:left;line-height:120%;font-size:' +
@@ -1077,8 +1079,6 @@
         mWidth +
         ';">' +
         "			<li>A/Prof Steven Most (s.most@unsw.edu.au)</li><li>A/Prof Yue Shi Ai (a.ai@student.unsw.edu.au)</li></ul>" +
-
-        
         '	<p style="text-align:left;line-height:120%;font-size:' +
         smallFontSize +
         ";margin:" +
@@ -1101,9 +1101,9 @@
         ';">' +
         "			<li>Phone number: 0293856222</li>" +
         "			<li>Email: humanethics@unsw.edu.au</li>" +
-        "			<li>Reference Number: 3670</li>" +
+        "			<li>Reference Number: 3762</li>" +
         "		</ul>" +
-        '			Please keep a copy of this information sheet (you can download the pdf <a href="InformedConsent_3670.pdf" target="_blank">here</a>).<br>' +
+        '			Please keep a copy of this information sheet (you can download the pdf <a href="InformedConsent_3762.pdf" target="_blank">here</a>).<br>' +
         "			<br>" +
         '			<p style="text-align:center;"><b>PARTICIPANT CONSENT</b></p>' +
         '			<p style="text-align:left;font-size:' +
@@ -1130,7 +1130,7 @@
         smallFontSize +
         ";margin:" +
         mWidth +
-        ';margin-top:30px;">Approval No 3670</p>' +
+        ';margin-top:30px;">Approval No 3762</p>' +
         '			<p style="text-align:center;"><b>THE UNIVERSITY OF NEW SOUTH WALES<br>' +
         "			Additional Study (Debriefing) Information</b><br><br><b>Media and attention</b><br></p>" +
         "<b>THANK YOU FOR PARTICIPATING. REST ASSURED THAT ALL UNPLEASANT IMAGES USED IN THIS STUDY WERE STAGED USING SPECIAL EFFECTS AND MAKEUP.</b><br>" +
@@ -1139,15 +1139,15 @@
         ";margin:" +
         mWidth +
         ';"><b>(a) What are the research questions?</b><br>' +
-        "			The study investigates whether knowing that emotional averse stimuli are fake changes their impact on perception, impact on memory and how people subjectively rate their intensity<br><br>" +
+        "			The study investigates whether knowing that emotionally aversive stimuli are fake changes their impact on perception and memory, which may also depend on how much they enjoy viewing violent media.<br><br>" +
         "			<b>(b)	How does this study extend previous research on this topic?</b><br>" +
-        "			Previous research has consistently demonstrated an effect known as emotion-induced blindness, where emotional images embedded in a rapid stream impair the ability to see a subsequent target. Emotional stimuli also tend to be remembered better. The current study aims to investigate whether these effects are driven purely by the content of the images or can be modulated by how people think about the pictures (e.g., knowing that they are fake). In this experiment, half of the participants were told that the pictures were fake at the start of the experiment and half were not told this until the end.<br><br>" +
+        `			Previous research has consistently demonstrated an effect known as emotion-induced blindness, where emotional images embedded in a rapid stream impair people’s ability to see a subsequent target. Emotional stimuli also tend to be remembered better. A previous study also investigated whether this effect can be modulated by how people think of the images (e.g. informing the participants that the aversive images were fake). Informed people continued to experience emotion-induced blindness. The current study aims to investigate whether enjoyment of violent media may modulate this attentional bias towards the aversive stimuli even when they know the images are fake. In this experiment, the participants will be informed that the pictures are fake at the second half of the experiment and will compare against the first half when they were not informed.<br><br>` +
         "			<b>(c)	What are some potential real-world implications of this research?</b><br>" +
-        "			Cognitive appraisal is the assessment of an emotional situation, where a person evaluates how that situation will affect them by interpreting different aspects of that situation. The appraisal of a stimulus as threatening or disturbing often leads to responses such as stress and fear. This study aims to examine whether influencing the cognitive appraisal of threatening or disturbing stimuli will lower the extent to which they impair awareness and response to target stimuli. This may help researchers better understand strategies for reducing the trauma of witnessing upsetting scenes in the real world. <br><br>" +
+        "			What is the appeal of violence in the media and why do people enjoy it? This is a question that has received considerable attention and this study may shed some light on understanding why people may enjoy violent entertainment. This could contribute to the public discussion that consistently worries about the appropriateness of having violence in the media and may have implications beyond the psychology literature too. <br><br>" +
         "			<b>(d)	What is a potential issue or limitation of the study?</b><br>" +
-        "			A limitation with the design of the study is the reliance on participant ability to report how emotional they find a stimulus to be. Not everyone has equal insight into their emotional reactions. A more objective measure of emotional response could include the galvanic skin response, a measure of physiological arousal. However, as this study will be run online, this is not feasible. <br><br>" +
+        "			A limitation of the study is the reliance on a specific sample of people’s reports on how much they enjoy violent media. The sample might end up skewed to a low or high end distribution in enjoyment or there may be no split at all as people may just enjoy violent media anyway. A way to address this is to research the general enjoyment of violent content and compare to see if the sample is representative of it. <br><br>" +
         "			<b>(e)	What is the methodology of this study?</b><br>" +
-        "			The experiment is a 2 x 2 between-subjects design. The first independent variable is whether participants are told that the aversive stimuli are fake at the start of the experiment. The second independent variable is the emotional valence of the critical pictures (negative vs. neutral). There are three dependent variables. The first is the mean percentage accuracy in reporting the correct target orientation in the emotion-induced blindness task. The second is the subjective rating of unpleasantness (1=pleasant, 9 = unpleasant) and arousal (1=calm, 9= highly arousing) for emotional distractors. The third is how well participants remembered the critical distractors in a surprise memory test. <br><br>" +
+        "			In this study, people look for a target in each rapid stream of items, and the target can be preceded by an emotional picture. The emotional picture often prevents people from seeing the target, an effect known as emotion-induced blindness. Here, the emotional pictures are all fake, created by special effects studios, and we are measuring whether known that they are fake alters there impact on target perception, as well as the degree to which the pictures are remembered. We are testing whether this knowledge has a difference impact depending on how much people enjoy violent entertainment and whether this is modulated by personality characteristics that are indexed through questionnaires. <br><br>" +
         "			<b>(f)	Is there any further reading I can do if I am interested in this topic?</b><br>" +
         "			For more information about the phenomenon of emotion-induced blindness, see:<br>" +
         '		<ul style="text-align:left;line-height:120%;font-size:' +
@@ -1163,7 +1163,7 @@
         ";margin:" +
         mWidth +
         ';">' +
-        '			Please keep a copy of this information sheet (you can download the pdf <a href="Writtendebrief_3670.pdf" target="_blank">here</a>).<br>' +
+        '			Please keep a copy of this information sheet (you can download the pdf <a href="Writtendebrief_3762.pdf" target="_blank">here</a>).<br>' +
         "			<br>" +
         '			<p style="text-align:center;"><b>PARTICIPANT CONFIRMATION</b></p>' +
         '			<p style="text-align:center;font-size:' +
@@ -1176,7 +1176,7 @@
         '<p style="font-size:130%;line-height:0%;"><b>I have read the information!</b></p>',
       ],
       prompt:
-        "<br>Clicking here will finish the experiment and redirect you back to Prolific to receive your payment. Thank you for participating.",
+        "<br>",
     };
 
     //SHOW THREE IMAGES TO MAKE SURE THAT THEY DO REALLY WANT TO CONTINUE
@@ -1212,12 +1212,11 @@
       timeline_variables: IAPS_preview,
     };
 
-    var alices_wording = "Did you think the unpleasant pictures in this experiment were real? Here is some important information about them before you start the second half of the experiment: All the unpleasant pictures in this experiment are fake or staged. They were created by professional special effects studios and artists, and were collected from their online galleries."
+    var alices_wording =
+      "Did you think the unpleasant pictures in this experiment were real? Here is some important information about them before you start the second half of the experiment: All the unpleasant pictures in this experiment are fake or staged. They were created by professional special effects studios and artists, and were collected from their online galleries.";
 
     // *******************INSTRUCTION-D******************
-    //Note: edited first INSTRUCT set to contain statement that stimuli are fake
     var INSTRUCTD = {
-      //[STEVE: DON'T NEED INSTRUCTD OR INSTRUCTND]
       type: "html-button-response",
       stimulus:
         '<p style="text-align:center;"><b>IMPORTANT NOTE</b><br><br>' +
@@ -1225,8 +1224,9 @@
         mWidth +
         ';">' +
         "			ALL UNPLEASANT IMAGES ARE <b>FAKE</b> OR <b>STAGED</b>, AND WERE CREATED USING SPECIAL EFFECTS OR MAKEUP.<br><br><br></p>" +
-        "			In this rapid target detection task, some pictures appear that are of people, and some of these are graphic or unpleasant." +
-        "			The rotated target will never contain a person, so please ignore these pictures.<br><br>" +
+        `			Did you think the unpleasant pictures in this experiment were real?
+        Here is some important information about them before you start the second half of the experiment:` +
+        "			pictures in this experiment are fake or staged. They were created by professional special effects studios and artists, and were collected from their online galleries.<br><br>" +
         '			<p style="text-align:center;"><b>PARTICIPANT CONFIRMATION</b></p>' +
         '			<p style="text-align:center;font-size:' +
         smallFontSize +
@@ -1319,7 +1319,6 @@
             "1. Using the scale below where 1 is PLEASANT, 5 is NEUTRAL and 9 is UNPLEASANT - how unpleasant would you rate your emotional reaction to these images?",
           name: "picsPleasant",
           options: MCHECKAoptions,
-          required: true,
           horizontal: true,
         },
         {
@@ -1327,10 +1326,111 @@
             "2. Using the scale of 1-9 below where 1 is CALM and 9 is AROUSED - how energised or aroused was your emotional reaction to these images?",
           name: "picsArousing",
           options: MCHECKAoptions,
-          required: true,
           horizontal: true,
         },
       ],
+    };
+
+    const picResponseAfterRsvp = {
+      type: "survey-multi-choice",
+      preamble:
+        '<p style=";margin:10px;">During this experiment, you saw several images that were graphic and unpleasant. Please read each statement below and select the answer that best represents your OVERALL FEELING to these images. Your answers will remain anonymous and confidential so please be honest.</p>',
+      questions: [
+        {
+          prompt:
+            "1. Now that you know the images are fake, on a scale of 1-9 where 1 is PLEASANT, 5 is NEUTRAL and 9 is UNPLEASANT - how unpleasant would you rate your emotional reaction to these images?",
+          name: "picsPleasant",
+          options: MCHECKAoptions,
+          horizontal: true,
+        },
+        {
+          prompt:
+            "2. Now that you know the images are fake, on a scale of 1-9 where 1 is CALM and 9 is AROUSED - how energised or aroused was your emotional reaction to these images?",
+          name: "picsArousing",
+          options: MCHECKAoptions,
+          horizontal: true,
+        },
+        {
+          prompt:
+            "3. Before being notified that the images were fake, what percentage of the graphic pictures did you assume to be real?",
+          name: "picsReal",
+          options: MCHECKAoptions,
+          horizontal: true,
+        },
+      ],
+    };
+
+    // DASS21
+    const dass21Questions = [
+      "I found it hard to wind down.",
+      "I was aware of dryness of my mouth.",
+      "I couldn't seem to experience any positive feeling at all.",
+      "I experienced breathing difficulty (e.g., excessively rapid breathing, breathlessness in the absence of physical exertion).",
+      "I found it difficult to work up the initiative to do things.",
+      "I tended to over-react to situations.",
+      "I experienced trembling (e.g., in the hands).",
+      "I felt that I was using a lot of nervous energy.",
+      "I was worried about situations in which I might panic and make a fool of myself.",
+      "I felt that I had nothing to look forward to.",
+      "I found myself getting agitated.",
+      "I found it difficult to relax.",
+      "I felt down-hearted and blue.",
+      "I was intolerant of anything that kept me from getting on with what I was doing.",
+      "I felt I was close to panic.",
+      "I was unable to become enthusiastic about anything.",
+      "I felt I wasn't worth much as a person.",
+      "I felt that I was rather touchy.",
+      "I was aware of the action of my heart in the absence of physical exertion (e.g., sense of heart rate increase, heart missing a beat).",
+      "I felt scared without any good reason.",
+      "I felt that life was meaningless.",
+    ];
+
+    // - 1 because psychologists don't 0 index their measures
+    const subscaleStress = [1, 6, 8, 11, 12, 14, 18].map((i) => `Q${i - 1}`);
+    const subscaleAnxiety = [2, 4, 7, 9, 15, 19, 20].map((i) => `Q${i - 1}`);
+    const subscaleDepression = [3, 5, 10, 13, 16, 17, 21].map(
+      (i) => `Q${i - 1}`
+    );
+
+    function calculateSubscaleScoreDass(subscale) {
+      let subscaleScore = 0;
+      for (const question_key of subscale) {
+        const responses_object = JSON.parse(
+          jsPsych.data.get().last().values()[0]["responses"]
+        );
+        const target_question_response = responses_object[question_key];
+        subscaleScore += target_question_response;
+      }
+      return subscaleScore;
+    }
+
+    const item_1_preamble = `Please read each statement and select the answer which indicates how much the statement
+    applied to you over the past week. There are no right or wrong answers. Do not spend too much
+    time on any statement.`;
+
+    const agreementLabels = [
+      '<div class="agreement-labels">Did not apply to me at all</div>',
+      '<div class="agreement-labels">Applied to me to some degree, or some of the time</div>',
+      '<div class="agreement-labels">Applied to me to a considerable degree or a good part of time</div>',
+      '<div class="agreement-labels">Applied to me very much or most of the time</div>',
+    ];
+
+    let item_1_questions = dass21Questions.map((question) => {
+      return { prompt: question, labels: agreementLabels };
+    });
+
+    const dass21 = {
+      type: "survey-likert",
+      preamble: item_1_preamble,
+      questions: item_1_questions,
+      on_finish: function (data) {
+        data.anxiety = calculateSubscaleScoreDass(subscaleAnxiety);
+        data.depression = calculateSubscaleScoreDass(subscaleDepression);
+        data.stress = calculateSubscaleScoreDass(subscaleStress);
+        console.log(`data.anxiety: ${data.anxiety}`);
+        console.log(`data.depression: ${data.depression}`);
+        console.log(`data.stress: ${data.stress}`);
+      },
     };
 
     //*************Did they follow instructions**********************
@@ -1361,7 +1461,6 @@
             "Roughly what percentage of the unpleasant and graphic images did you assume to be REAL (photos taken from real events)?",
           name: "percentageReal",
           options: percentageOptions,
-          required: true,
         },
       ],
     };
@@ -1384,92 +1483,6 @@
         " Please press space bar to begin",
       choices: [" "],
       response_ends_trial: true,
-    };
-
-    //**************NEUROTICISM Q***********************
-
-    //The same response key will be given for all questions right? So just carefully copy the possible responses below between the " "
-    var NEURoptions = ["Yes", "No", "Rather Not Say"];
-
-    // please edit the preamble and the prompts. The name should just be the num of the question.
-    var NEUR = {
-      type: "survey-multi-choice",
-      preamble:
-        "Please read each statement and decide how well it describes you by selecting the appropriate answer. There are no right or wrong answers. Your answers will remain anonymous and confidential so please be honest.",
-      questions: [
-        {
-          prompt: "1. Does your mood often go up and down?",
-          name: "NEUR1",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "2. Do you ever feel ‘just miserable’ for no reason?",
-          name: "NEUR2",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "3. Are you an irritable person?",
-          name: "NEUR3",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "4. Are your feelings easily hurt?",
-          name: "NEUR4",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "5. Do you often feel fed up?",
-          name: "NEUR5",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "6. Would you call yourself a nervous person?",
-          name: "NEUR6",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "7. Are you a worrier?",
-          name: "NEUR7",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "8. Would you call yourself tense or highly strung?",
-          name: "NEUR8",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "9. Do you worry too long after embarrassing experiences?",
-          name: "NEUR9",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "10. Do you suffer from nerves?",
-          name: "NEUR10",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "11. Do you often feel lonely?",
-          name: "NEUR11",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "12. Are you often troubled about feelings of guilt?",
-          name: "NEUR12",
-          options: NEURoptions,
-          required: true,
-        },
-      ],
     };
 
     ///DEMOGRAPHIC QUESTIONS
@@ -1524,7 +1537,7 @@
       loop_function: function () {
         blockNum++;
         trialNumInBlock = 0;
-        if (blockNum < (numBlocksTotal / 2) && quitButtonCount < 1) {
+        if (blockNum < numBlocksTotal / 2 && quitButtonCount < 1) {
           return true;
         } else {
           return false;
@@ -1533,16 +1546,16 @@
     };
 
     var loop_RSVPBlocks_2 = {
-        timeline: [nextBlock, loop_RSVPTrials],
-        loop_function: function () {
-          blockNum++;
-          trialNumInBlock = 0;
-          if (blockNum < numBlocksTotal && quitButtonCount < 1) {
-            return true;
-          } else {
-            return false;
-          }
-        },
+      timeline: [nextBlock, loop_RSVPTrials],
+      loop_function: function () {
+        blockNum++;
+        trialNumInBlock = 0;
+        if (blockNum < numBlocksTotal && quitButtonCount < 1) {
+          return true;
+        } else {
+          return false;
+        }
+      },
     };
 
     var loop_memTrials = {
@@ -1681,7 +1694,7 @@
 
     let psychopathy_empathy_item_1_questions = empathyQuestionTexts.map(
       (question) => {
-        return { prompt: question, labels: psychopathyEmpathyAgreementLabels, required: true };
+        return { prompt: question, labels: psychopathyEmpathyAgreementLabels };
       }
     );
 
@@ -1760,7 +1773,7 @@
 
     let horror_typology_item_1_questions = horrorTypologyQuestions.map(
       (question) => {
-        return { prompt: question, labels: horrorTypologyAgreementLabels, required: true };
+        return { prompt: question, labels: horrorTypologyAgreementLabels };
       }
     );
 
@@ -1806,14 +1819,14 @@
       "How much do you like watching violent movies/shows (scale 1-10)";
     const violent_media_survey_item_3 = {
       type: "survey-html-form",
-      html: `<label for="item3">${violent_media_survey_item_3_prompt}</label><br><input name="item3" type='number' min=1 max=10 required=true></input><br>`,
+      html: `<label for="item3">${violent_media_survey_item_3_prompt}</label><br><input name="item3" type='number' min=1 max=10></input><br>`,
     };
 
     const violent_media_survey_item_4_prompt =
       "How many hours per month do you spend watching violent movies/shows";
     const violent_media_survey_item_4 = {
       type: "survey-html-form",
-      html: `<label for="item4">${violent_media_survey_item_4_prompt}</label><br><input name="item4" type='number' min=0 required=true></input><br>`,
+      html: `<label for="item4">${violent_media_survey_item_4_prompt}</label><br><input name="item4" type='number' min=0></input><br>`,
     };
     const violentMediaSurveyTimeline = [
       violent_media_survey_item_1,
@@ -1881,6 +1894,7 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
+      // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
 
@@ -1890,9 +1904,9 @@
       });
       exptTimeline.push(preExposurePreamble);
       exptTimeline.push(imagePreExposureProcedure);
-      exptTimeline.push(NEURinstruction);
-      exptTimeline.push(NEUR); // STEVE: IF YOU WANT QUESTIONNAIRE AFTER EXP, MOVE IN TIMELINE
       exptTimeline.push(loop_initial_instructions);
+
+      // practice trials
       exptTimeline.push(ready_to_start_practice);
       exptTimeline.push(fadeToBlackTrial);
       exptTimeline.push(first_practice_trial_loop);
@@ -1900,18 +1914,25 @@
       exptTimeline.push(instr_before_prac_loop);
       exptTimeline.push(fadeToBlackTrial);
       exptTimeline.push(loop_practice_trials);
-      
+
+      // rsvp trials
       exptTimeline.push(loop_RSVPBlocks);
-      exptTimeline.push(picResponse)
+      exptTimeline.push(picResponse);
       exptTimeline.push(loop_distInstruct_instructions);
       exptTimeline.push(loop_RSVPBlocks_2);
+      exptTimeline.push(picResponseAfterRsvp);
+
+      // memory test
       exptTimeline.push(if_node_nextBlockMemory);
       exptTimeline.push(if_node_memBlock);
+
+      // post-trial surveys
       exptTimeline.push(if_node_percentReal);
       exptTimeline.push(triarchicPsychopathyMeasureEmpathySubscaleTrail);
       exptTimeline.push(horrorTypologySurveyTrial);
       violentMediaSurveyTimeline.forEach((trial) => exptTimeline.push(trial));
-      exptTimeline.push(demographics)
+      exptTimeline.push(dass21);
+      exptTimeline.push(demographics);
       exptTimeline.push(debrief); //save data here.
       exptTimeline.push({
         type: "fullscreen",
