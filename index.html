@@ -166,7 +166,7 @@
       var pracNperstep = 2;
 
       var firstPracTrialDur = 750; // 750
-      var numMemBlocks = 4; // how many blocks should we split mem trials (with breaks) into. Note that mem trials should be divisable by 4!
+      var numMemBlocks = 1; // how many blocks should we split mem trials (with breaks) into. Note that mem trials should be divisable by 4!
       var numMemPics = 28; //This is number of mem trials for each negative/neutral condition (not foils).
       var numFoilPics = 9; //This is per emotion condition - so 9 negative + 9 neutral pics left over to act as foils in the memory task [STEVE: CHANGE THIS AS APPROPRIATE FOR MEMORY TEST]
       var memConditionsTotal = 4; //1 = neg old 2 =  neg_foils, 3 = neut old, 4 = neut foils.
@@ -1465,7 +1465,7 @@
     var percentageReal = {
       type: "survey-multi-choice",
       preamble:
-        "You are nearly finished with the experiment. We just have a few questions to ask  so please use the mouse to respod.<br><br> In this experiment you were shown some unpleasant and graphic images.",
+        "You are nearly finished with the experiment. We just have a few questions to ask  so please use the mouse to respond.<br><br> In this experiment you were shown some unpleasant and graphic images.",
       questions: [
         {
           prompt:
@@ -1582,6 +1582,7 @@
       },
     };
 
+    /*
     var checkBlockBreak = {
       // No block break after final memory block
       timeline: [memBlockBreak],
@@ -1593,9 +1594,10 @@
         }
       },
     };
+    */
 
     var loop_memBlocks = {
-      timeline: [loop_memTrials, checkBlockBreak],
+      timeline: [loop_memTrials],
       loop_function: function () {
         memBlockNum++;
         trialNumInBlock = 0;
