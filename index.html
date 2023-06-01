@@ -1013,7 +1013,7 @@
         smallFontSize +
         ";margin:" +
         mWidth +
-        ';margin-top:30px;">Approval No 3670</p>' +
+        ';margin-top:30px;">Approval No 3762</p>' +
         '		<p style="text-align:center;"><b>THE UNIVERSITY OF NEW SOUTH WALES<br>' +
         "			PARTICIPANT INFORMATION STATEMENT</b><br><br><b>Media and attention</b><br></p>" +
         '			<p style="text-align:left;line-height:120%;font-size:' +
@@ -1102,9 +1102,9 @@
         ';">' +
         "			<li>Phone number: 0293856222</li>" +
         "			<li>Email: humanethics@unsw.edu.au</li>" +
-        "			<li>Reference Number: 3670</li>" +
+        "			<li>Reference Number: 3762</li>" +
         "		</ul>" +
-        '			Please keep a copy of this information sheet (you can download the pdf <a href="InformedConsent_3670.pdf" target="_blank">here</a>).<br>' +
+        '			Please keep a copy of this information sheet (you can download the pdf <a href="InformedConsent_3762.pdf" target="_blank">here</a>).<br>' +
         "			<br>" +
         '			<p style="text-align:center;"><b>PARTICIPANT CONSENT</b></p>' +
         '			<p style="text-align:left;font-size:' +
@@ -1131,7 +1131,7 @@
         smallFontSize +
         ";margin:" +
         mWidth +
-        ';margin-top:30px;">Approval No 3670</p>' +
+        ';margin-top:30px;">Approval No 3762</p>' +
         '			<p style="text-align:center;"><b>THE UNIVERSITY OF NEW SOUTH WALES<br>' +
         "			Additional Study (Debriefing) Information</b><br><br><b>Media and attention</b><br></p>" +
         "<b>THANK YOU FOR PARTICIPATING. REST ASSURED THAT ALL UNPLEASANT IMAGES USED IN THIS STUDY WERE STAGED USING SPECIAL EFFECTS AND MAKEUP.</b><br>" +
@@ -1164,7 +1164,7 @@
         ";margin:" +
         mWidth +
         ';">' +
-        '			Please keep a copy of this information sheet (you can download the pdf <a href="Writtendebrief_3670.pdf" target="_blank">here</a>).<br>' +
+        '			Please keep a copy of this information sheet (you can download the pdf <a href="Writtendebrief_3762.pdf" target="_blank">here</a>).<br>' +
         "			<br>" +
         '			<p style="text-align:center;"><b>PARTICIPANT CONFIRMATION</b></p>' +
         '			<p style="text-align:center;font-size:' +
@@ -1216,9 +1216,7 @@
     var alices_wording = "Did you think the unpleasant pictures in this experiment were real? Here is some important information about them before you start the second half of the experiment: All the unpleasant pictures in this experiment are fake or staged. They were created by professional special effects studios and artists, and were collected from their online galleries."
 
     // *******************INSTRUCTION-D******************
-    //Note: edited first INSTRUCT set to contain statement that stimuli are fake
     var INSTRUCTD = {
-      //[STEVE: DON'T NEED INSTRUCTD OR INSTRUCTND]
       type: "html-button-response",
       stimulus:
         '<p style="text-align:center;"><b>IMPORTANT NOTE</b><br><br>' +
@@ -1226,8 +1224,9 @@
         mWidth +
         ';">' +
         "			ALL UNPLEASANT IMAGES ARE <b>FAKE</b> OR <b>STAGED</b>, AND WERE CREATED USING SPECIAL EFFECTS OR MAKEUP.<br><br><br></p>" +
-        "			In this rapid target detection task, some pictures appear that are of people, and some of these are graphic or unpleasant." +
-        "			The rotated target will never contain a person, so please ignore these pictures.<br><br>" +
+        `			Did you think the unpleasant pictures in this experiment were real?
+        Here is some important information about them before you start the second half of the experiment:` +
+        "			pictures in this experiment are fake or staged. They were created by professional special effects studios and artists, and were collected from their online galleries.<br><br>" +
         '			<p style="text-align:center;"><b>PARTICIPANT CONFIRMATION</b></p>' +
         '			<p style="text-align:center;font-size:' +
         smallFontSize +
@@ -1320,7 +1319,6 @@
             "1. Using the scale below where 1 is PLEASANT, 5 is NEUTRAL and 9 is UNPLEASANT - how unpleasant would you rate your emotional reaction to these images?",
           name: "picsPleasant",
           options: MCHECKAoptions,
-          required: true,
           horizontal: true,
         },
         {
@@ -1328,7 +1326,35 @@
             "2. Using the scale of 1-9 below where 1 is CALM and 9 is AROUSED - how energised or aroused was your emotional reaction to these images?",
           name: "picsArousing",
           options: MCHECKAoptions,
-          required: true,
+          horizontal: true,
+        },
+      ],
+    };
+
+    const picResponseAfterRsvp = {
+      type: "survey-multi-choice",
+      preamble:
+        '<p style=";margin:10px;">During this experiment, you saw several images that were graphic and unpleasant. Please read each statement below and select the answer that best represents your OVERALL FEELING to these images. Your answers will remain anonymous and confidential so please be honest.</p>',
+      questions: [
+        {
+          prompt:
+            "1. Now that you know the images are fake, on a scale of 1-9 where 1 is PLEASANT, 5 is NEUTRAL and 9 is UNPLEASANT - how unpleasant would you rate your emotional reaction to these images?",
+          name: "picsPleasant",
+          options: MCHECKAoptions,
+          horizontal: true,
+        },
+        {
+          prompt:
+            "2. Now that you know the images are fake, on a scale of 1-9 where 1 is CALM and 9 is AROUSED - how energised or aroused was your emotional reaction to these images?",
+          name: "picsArousing",
+          options: MCHECKAoptions,
+          horizontal: true,
+        },
+        {
+          prompt:
+            "3. Before being notified that the images were fake, what percentage of the graphic pictures did you assume to be real?",
+          name: "picsReal",
+          options: MCHECKAoptions,
           horizontal: true,
         },
       ],
@@ -1362,7 +1388,6 @@
             "Roughly what percentage of the unpleasant and graphic images did you assume to be REAL (photos taken from real events)?",
           name: "percentageReal",
           options: percentageOptions,
-          required: true,
         },
       ],
     };
@@ -1385,92 +1410,6 @@
         " Please press space bar to begin",
       choices: [" "],
       response_ends_trial: true,
-    };
-
-    //**************NEUROTICISM Q***********************
-
-    //The same response key will be given for all questions right? So just carefully copy the possible responses below between the " "
-    var NEURoptions = ["Yes", "No", "Rather Not Say"];
-
-    // please edit the preamble and the prompts. The name should just be the num of the question.
-    var NEUR = {
-      type: "survey-multi-choice",
-      preamble:
-        "Please read each statement and decide how well it describes you by selecting the appropriate answer. There are no right or wrong answers. Your answers will remain anonymous and confidential so please be honest.",
-      questions: [
-        {
-          prompt: "1. Does your mood often go up and down?",
-          name: "NEUR1",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "2. Do you ever feel ‘just miserable’ for no reason?",
-          name: "NEUR2",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "3. Are you an irritable person?",
-          name: "NEUR3",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "4. Are your feelings easily hurt?",
-          name: "NEUR4",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "5. Do you often feel fed up?",
-          name: "NEUR5",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "6. Would you call yourself a nervous person?",
-          name: "NEUR6",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "7. Are you a worrier?",
-          name: "NEUR7",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "8. Would you call yourself tense or highly strung?",
-          name: "NEUR8",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "9. Do you worry too long after embarrassing experiences?",
-          name: "NEUR9",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "10. Do you suffer from nerves?",
-          name: "NEUR10",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "11. Do you often feel lonely?",
-          name: "NEUR11",
-          options: NEURoptions,
-          required: true,
-        },
-        {
-          prompt: "12. Are you often troubled about feelings of guilt?",
-          name: "NEUR12",
-          options: NEURoptions,
-          required: true,
-        },
-      ],
     };
 
     ///DEMOGRAPHIC QUESTIONS
@@ -1682,7 +1621,7 @@
 
     let psychopathy_empathy_item_1_questions = empathyQuestionTexts.map(
       (question) => {
-        return { prompt: question, labels: psychopathyEmpathyAgreementLabels, required: true };
+        return { prompt: question, labels: psychopathyEmpathyAgreementLabels };
       }
     );
 
@@ -1761,7 +1700,7 @@
 
     let horror_typology_item_1_questions = horrorTypologyQuestions.map(
       (question) => {
-        return { prompt: question, labels: horrorTypologyAgreementLabels, required: true };
+        return { prompt: question, labels: horrorTypologyAgreementLabels };
       }
     );
 
@@ -1807,14 +1746,14 @@
       "How much do you like watching violent movies/shows (scale 1-10)";
     const violent_media_survey_item_3 = {
       type: "survey-html-form",
-      html: `<label for="item3">${violent_media_survey_item_3_prompt}</label><br><input name="item3" type='number' min=1 max=10 required=true></input><br>`,
+      html: `<label for="item3">${violent_media_survey_item_3_prompt}</label><br><input name="item3" type='number' min=1 max=10></input><br>`,
     };
 
     const violent_media_survey_item_4_prompt =
       "How many hours per month do you spend watching violent movies/shows";
     const violent_media_survey_item_4 = {
       type: "survey-html-form",
-      html: `<label for="item4">${violent_media_survey_item_4_prompt}</label><br><input name="item4" type='number' min=0 required=true></input><br>`,
+      html: `<label for="item4">${violent_media_survey_item_4_prompt}</label><br><input name="item4" type='number' min=0></input><br>`,
     };
     const violentMediaSurveyTimeline = [
       violent_media_survey_item_1,
@@ -1882,7 +1821,7 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
-      ///*
+      // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
 
@@ -1893,6 +1832,8 @@
       exptTimeline.push(preExposurePreamble);
       exptTimeline.push(imagePreExposureProcedure);
       exptTimeline.push(loop_initial_instructions);
+      
+      // practice trials
       exptTimeline.push(ready_to_start_practice);
       exptTimeline.push(fadeToBlackTrial);
       exptTimeline.push(first_practice_trial_loop);
@@ -1901,13 +1842,18 @@
       exptTimeline.push(fadeToBlackTrial);
       exptTimeline.push(loop_practice_trials);
       
+      // rsvp trials
       exptTimeline.push(loop_RSVPBlocks);
       exptTimeline.push(picResponse)
       exptTimeline.push(loop_distInstruct_instructions);
       exptTimeline.push(loop_RSVPBlocks_2);
-      //*/
+      exptTimeline.push(picResponseAfterRsvp);
+
+      // memory test
       exptTimeline.push(if_node_nextBlockMemory);
       exptTimeline.push(if_node_memBlock);
+
+      // post-trial surveys
       exptTimeline.push(if_node_percentReal);
       exptTimeline.push(triarchicPsychopathyMeasureEmpathySubscaleTrail);
       exptTimeline.push(horrorTypologySurveyTrial);
