@@ -1334,7 +1334,7 @@
         },
         {
           prompt:
-            "2. Using the scale of 1-9 below where 1 is CALM and 9 is AROUSED - how energised or aroused was your emotional reaction to these images?",
+            "2. Using the scale of 1-9 below where 1 is CALM and 9 is INTENSE - how energised or intense was your emotional reaction to these images?",
           name: "picsArousing",
           options: MCHECKAoptions,
           horizontal: true,
@@ -1356,7 +1356,7 @@
         },
         {
           prompt:
-            "2. Now that you know the images are fake, on a scale of 1-9 where 1 is CALM and 9 is AROUSED - how energised or aroused was your emotional reaction to these images?",
+            "2. Now that you know the images are fake, on a scale of 1-9 where 1 is CALM and 9 is INTENSE - how energised or intense was your emotional reaction to these images?",
           name: "picsArousing",
           options: MCHECKAoptions,
           horizontal: true,
@@ -1907,6 +1907,7 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
+      /*
       // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
@@ -1933,13 +1934,14 @@
       exptTimeline.push(picResponse);
       exptTimeline.push(loop_distInstruct_instructions);
       exptTimeline.push(loop_RSVPBlocks_2);
+      */
       exptTimeline.push(picResponseAfterRsvp);
-
+      /*
       
       // memory test
       exptTimeline.push(if_node_nextBlockMemory);
       exptTimeline.push(if_node_memBlock);
-
+      */
       // post-trial surveys
       exptTimeline.push(triarchicPsychopathyMeasureEmpathySubscaleTrail);
       exptTimeline.push(horrorTypologySurveyTrial);
