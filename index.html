@@ -809,7 +809,7 @@
     var nextBlockMemory = {
       type: "html-keyboard-response",
       stimulus:
-        "<p>You're finished with the rotation task. <br><br> Now you will complete a slightly different task. <br><br> On each trial you will be shown an image for 3 seconds. <br><br> Please indicate within 3 seconds whether or not you have seen the image in the previous task by pressing the LEFT arrow key (<) if you have seen the image before or the RIGHT arrow key (>) if you have not seen the image before.<br><br>Press any key to begin</p>",
+        "<p>You're finished with the rotation task. <br><br> Now you will complete a slightly different task. <br><br> On each trial you will be shown an image for 1 second. <br><br> Please indicate whether or not you have seen the image in the previous task by pressing the LEFT arrow key (<) if you have seen the image before or the RIGHT arrow key (>) if you have not seen the image before.<br><br>Press any key to begin</p>",
       on_finish: function () {
         negcounter = 0; //reset to 0 so that we can show them again in the memory.
         neutcounter = 0;
@@ -1905,6 +1905,7 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
+      /*
       // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
@@ -1932,6 +1933,8 @@
       exptTimeline.push(loop_distInstruct_instructions);
       exptTimeline.push(loop_RSVPBlocks_2);
       exptTimeline.push(picResponseAfterRsvp);
+
+      */
 
       // memory test
       exptTimeline.push(if_node_nextBlockMemory);
