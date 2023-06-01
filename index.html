@@ -116,7 +116,17 @@
 
     var winWidth = 800; //800
 
-    var actualLagTypes = [2, 4]; //Actually only lag 2 [Steve: change this later]
+    const actualLagTypes = [2, 4]; //Actually only lag 2 [Steve: change this later]
+    let lag_types_by_trial = []
+    for (let i=0; i < trialsPerDistractCond; i++) {
+      lag_types_by_trial.push(actualLagTypes[0]);
+      lag_types_by_trial.push(actualLagTypes[1]);
+    }
+    for (let i=0; i < trialsPerBaselineType / 2; i++) {
+      lag_types_by_trial.push(actualLagTypes[0]);
+      lag_types_by_trial.push(actualLagTypes[1]);
+    }
+    lag_types_by_trial = jsPsych.randomization.shuffle(lag_types_by_trial);
 
     var focusCheckInterval = 1000;
 
@@ -156,7 +166,7 @@
       var pracNperstep = 2;
 
       var firstPracTrialDur = 750; // 750
-      var numMemBlocks = 4; // how many blocks should we split mem trials (with breaks) into. Note that mem trials should be divisable by 4!
+      var numMemBlocks = 1; // how many blocks should we split mem trials (with breaks) into. Note that mem trials should be divisable by 4!
       var numMemPics = 28; //This is number of mem trials for each negative/neutral condition (not foils).
       var numFoilPics = 9; //This is per emotion condition - so 9 negative + 9 neutral pics left over to act as foils in the memory task [STEVE: CHANGE THIS AS APPROPRIATE FOR MEMORY TEST]
       var memConditionsTotal = 4; //1 = neg old 2 =  neg_foils, 3 = neut old, 4 = neut foils.
@@ -398,8 +408,9 @@
               (latestDistractPosition + 1 - earliestDistractPosition)
           ));
       },
-      //lag_type: function () {return trialLag = actualLagTypes[lagType[trialSelector[trialNumInBlock]]]},
-      lag_type: 2,
+      lag_type: function () {
+        return lag_types_by_trial[trialNumInBlock]
+      },
       post_trial_gap: 0,
       on_finish: function (trial_data) {
         last_rsvp_time = trial_data.rsvp_time;
@@ -798,7 +809,7 @@
     var nextBlockMemory = {
       type: "html-keyboard-response",
       stimulus:
-        "<p>You're finished with the rotation task. <br><br> Now you will complete a slightly different task. <br><br> On each trial you will be shown an image for 3 seconds. <br><br> Please indicate within 3 seconds whether or not you have seen the image in the previous task by pressing the LEFT arrow key (<) if you have seen the image before or the RIGHT arrow key (>) if you have not seen the image before.<br><br>Press any key to begin</p>",
+        "<p>You're finished with the rotation task. <br><br> Now you will complete a slightly different task. <br><br> On each trial you will be shown an image for 1 second. <br><br> Please indicate whether or not you have seen the image in the previous task by pressing the LEFT arrow key (<) if you have seen the image before or the RIGHT arrow key (>) if you have not seen the image before.<br><br>Press any key to begin</p>",
       on_finish: function () {
         negcounter = 0; //reset to 0 so that we can show them again in the memory.
         neutcounter = 0;
@@ -1454,7 +1465,7 @@
     var percentageReal = {
       type: "survey-multi-choice",
       preamble:
-        "You are nearly finished with the experiment. We just have a few questions to ask  so please use the mouse to respod.<br><br> In this experiment you were shown some unpleasant and graphic images.",
+        "You are nearly finished with the experiment. We just have a few questions to ask  so please use the mouse to respond.<br><br> In this experiment you were shown some unpleasant and graphic images.",
       questions: [
         {
           prompt:
@@ -1571,6 +1582,7 @@
       },
     };
 
+    /*
     var checkBlockBreak = {
       // No block break after final memory block
       timeline: [memBlockBreak],
@@ -1582,9 +1594,10 @@
         }
       },
     };
+    */
 
     var loop_memBlocks = {
-      timeline: [loop_memTrials, checkBlockBreak],
+      timeline: [loop_memTrials],
       loop_function: function () {
         memBlockNum++;
         trialNumInBlock = 0;
@@ -1894,6 +1907,7 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
+      /*
       // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
@@ -1922,12 +1936,13 @@
       exptTimeline.push(loop_RSVPBlocks_2);
       exptTimeline.push(picResponseAfterRsvp);
 
+      
       // memory test
       exptTimeline.push(if_node_nextBlockMemory);
       exptTimeline.push(if_node_memBlock);
+      */
 
       // post-trial surveys
-      exptTimeline.push(if_node_percentReal);
       exptTimeline.push(triarchicPsychopathyMeasureEmpathySubscaleTrail);
       exptTimeline.push(horrorTypologySurveyTrial);
       violentMediaSurveyTimeline.forEach((trial) => exptTimeline.push(trial));
