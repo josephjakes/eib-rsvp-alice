@@ -1139,15 +1139,15 @@
         ";margin:" +
         mWidth +
         ';"><b>(a) What are the research questions?</b><br>' +
-        "			The study investigates whether knowing that emotional averse stimuli are fake changes their impact on perception, impact on memory and how people subjectively rate their intensity<br><br>" +
+        "			The study investigates whether knowing that emotionally aversive stimuli are fake changes their impact on perception and memory, which may also depend on how much they enjoy viewing violent media.<br><br>" +
         "			<b>(b)	How does this study extend previous research on this topic?</b><br>" +
-        "			Previous research has consistently demonstrated an effect known as emotion-induced blindness, where emotional images embedded in a rapid stream impair the ability to see a subsequent target. Emotional stimuli also tend to be remembered better. The current study aims to investigate whether these effects are driven purely by the content of the images or can be modulated by how people think about the pictures (e.g., knowing that they are fake). In this experiment, half of the participants were told that the pictures were fake at the start of the experiment and half were not told this until the end.<br><br>" +
+        `			Previous research has consistently demonstrated an effect known as emotion-induced blindness, where emotional images embedded in a rapid stream impair people’s ability to see a subsequent target. Emotional stimuli also tend to be remembered better. A previous study also investigated whether this effect can be modulated by how people think of the images (e.g. informing the participants that the aversive images were fake). Informed people continued to experience emotion-induced blindness. The current study aims to investigate whether enjoyment of violent media may modulate this attentional bias towards the aversive stimuli even when they know the images are fake. In this experiment, the participants will be informed that the pictures are fake at the second half of the experiment and will compare against the first half when they were not informed.<br><br>` +
         "			<b>(c)	What are some potential real-world implications of this research?</b><br>" +
-        "			Cognitive appraisal is the assessment of an emotional situation, where a person evaluates how that situation will affect them by interpreting different aspects of that situation. The appraisal of a stimulus as threatening or disturbing often leads to responses such as stress and fear. This study aims to examine whether influencing the cognitive appraisal of threatening or disturbing stimuli will lower the extent to which they impair awareness and response to target stimuli. This may help researchers better understand strategies for reducing the trauma of witnessing upsetting scenes in the real world. <br><br>" +
+        "			What is the appeal of violence in the media and why do people enjoy it? This is a question that has received considerable attention and this study may shed some light on understanding why people may enjoy violent entertainment. This could contribute to the public discussion that consistently worries about the appropriateness of having violence in the media and may have implications beyond the psychology literature too. <br><br>" +
         "			<b>(d)	What is a potential issue or limitation of the study?</b><br>" +
-        "			A limitation with the design of the study is the reliance on participant ability to report how emotional they find a stimulus to be. Not everyone has equal insight into their emotional reactions. A more objective measure of emotional response could include the galvanic skin response, a measure of physiological arousal. However, as this study will be run online, this is not feasible. <br><br>" +
+        "			A limitation of the study is the reliance on a specific sample of people’s reports on how much they enjoy violent media. The sample might end up skewed to a low or high end distribution in enjoyment or there may be no split at all as people may just enjoy violent media anyway. A way to address this is to research the general enjoyment of violent content and compare to see if the sample is representative of it. <br><br>" +
         "			<b>(e)	What is the methodology of this study?</b><br>" +
-        "			The experiment is a 2 x 2 between-subjects design. The first independent variable is whether participants are told that the aversive stimuli are fake at the start of the experiment. The second independent variable is the emotional valence of the critical pictures (negative vs. neutral). There are three dependent variables. The first is the mean percentage accuracy in reporting the correct target orientation in the emotion-induced blindness task. The second is the subjective rating of unpleasantness (1=pleasant, 9 = unpleasant) and arousal (1=calm, 9= highly arousing) for emotional distractors. The third is how well participants remembered the critical distractors in a surprise memory test. <br><br>" +
+        "			In this study, people look for a target in each rapid stream of items, and the target can be preceded by an emotional picture. The emotional picture often prevents people from seeing the target, an effect known as emotion-induced blindness. Here, the emotional pictures are all fake, created by special effects studios, and we are measuring whether known that they are fake alters there impact on target perception, as well as the degree to which the pictures are remembered. We are testing whether this knowledge has a difference impact depending on how much people enjoy violent entertainment and whether this is modulated by personality characteristics that are indexed through questionnaires. <br><br>" +
         "			<b>(f)	Is there any further reading I can do if I am interested in this topic?</b><br>" +
         "			For more information about the phenomenon of emotion-induced blindness, see:<br>" +
         '		<ul style="text-align:left;line-height:120%;font-size:' +
@@ -1176,7 +1176,7 @@
         '<p style="font-size:130%;line-height:0%;"><b>I have read the information!</b></p>',
       ],
       prompt:
-        "<br>Clicking here will finish the experiment and redirect you back to Prolific to receive your payment. Thank you for participating.",
+        "<br>",
     };
 
     //SHOW THREE IMAGES TO MAKE SURE THAT THEY DO REALLY WANT TO CONTINUE
@@ -1894,7 +1894,6 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
-
       // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
