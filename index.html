@@ -117,12 +117,12 @@
     var winWidth = 800; //800
 
     const actualLagTypes = [2, 4]; //Actually only lag 2 [Steve: change this later]
-    let lag_types_by_trial = []
-    for (let i=0; i < trialsPerDistractCond; i++) {
+    let lag_types_by_trial = [];
+    for (let i = 0; i < trialsPerDistractCond; i++) {
       lag_types_by_trial.push(actualLagTypes[0]);
       lag_types_by_trial.push(actualLagTypes[1]);
     }
-    for (let i=0; i < trialsPerBaselineType / 2; i++) {
+    for (let i = 0; i < trialsPerBaselineType / 2; i++) {
       lag_types_by_trial.push(actualLagTypes[0]);
       lag_types_by_trial.push(actualLagTypes[1]);
     }
@@ -409,7 +409,7 @@
           ));
       },
       lag_type: function () {
-        return lag_types_by_trial[trialNumInBlock]
+        return lag_types_by_trial[trialNumInBlock];
       },
       post_trial_gap: 0,
       on_finish: function (trial_data) {
@@ -1186,8 +1186,7 @@
       choices: [
         '<p style="font-size:130%;line-height:0%;"><b>I have read the information!</b></p>',
       ],
-      prompt:
-        "<br>",
+      prompt: "<br>",
     };
 
     //SHOW THREE IMAGES TO MAKE SURE THAT THEY DO REALLY WANT TO CONTINUE
@@ -1686,12 +1685,22 @@
       const responses = JSON.parse(
         jsPsych.data.get().last().values()[0]["responses"]
       );
+
+      let encountered_null_response_flag = false;
       question_keys.map(function (question_key, index) {
         const response = responses[question_key];
         const score_mulitplier = score_mulitpliers[index];
-        //console.log('adjusted score', (response + 1) * score_mulitplier)
-        subscaleScore += (response + 1) * score_mulitplier;
+
+        if (response !== "") {
+          subscaleScore += (response + 1) * score_mulitplier;
+        } else {
+          encountered_null_response_flag = true;
+        }
       });
+      if (encountered_null_response_flag) {
+        subscaleScore = "subject did not answer all questions";
+      }
+
       console.log("empathy subscale score: ", subscaleScore);
       return subscaleScore;
     }
@@ -1763,10 +1772,19 @@
       const responses = JSON.parse(
         jsPsych.data.get().last().values()[0]["responses"]
       );
+      let encountered_null_response_flag = false;
       for (const target_question_key of subscale) {
         const target_question_response = responses[target_question_key];
         // adding 1 because the scale is 1-7 not 0-6
-        subscaleScore += target_question_response + 1;
+        if (target_question_response !== "") {
+          subscaleScore += target_question_response + 1;
+        } else {
+          encountered_null_response_flag = true;
+        }
+      }
+
+      if (encountered_null_response_flag) {
+        subscaleScore = "subject did not answer all questions";
       }
       return subscaleScore;
     }
@@ -1828,6 +1846,39 @@
       questions: violent_media_survey_item_1_questions,
     };
 
+    const violent_media_survey_html_form_text_hours = game_names.map(
+      (game_name) => {
+        return {
+          label_text: game_name,
+          input_name: game_name,
+        };
+      }
+    );
+
+    let violent_media_survey_html_form_inputs_1 =
+      violent_media_survey_html_form_text_hours
+        .map(({ label_text, input_name }) => {
+          return `<div><label for="${input_name} name">${label_text}</label><br><input name="${input_name} name" type='text'></input></div>`;
+        })
+    violent_media_survey_html_form_inputs_1 = violent_media_survey_html_form_inputs_1.join("");
+
+
+    let violent_media_survey_html_form_inputs_2 =
+      violent_media_survey_html_form_text_hours
+        .map(({ label_text, input_name }) => {
+          return `<div><label for="${input_name} hours">${label_text}</label><br><input name="${input_name} hours" type='number'></input></div>`;
+        })
+        .join("");
+
+    const violent_media_survey_item_1_prompt =
+      "<p>Please list the titles of games that you currently play (up to 5)</p>";
+    const violent_media_survey_item_2_prompt =
+      "How often do you play each game (hours/week)";
+    const violent_media_survey_html_form = {
+      type: "survey-html-form",
+      html: `${violent_media_survey_item_1_prompt}${violent_media_survey_html_form_inputs_1}<br><p>${violent_media_survey_item_2_prompt}</p>${violent_media_survey_html_form_inputs_2}<br>`,
+    };
+
     const violent_media_survey_item_3_prompt =
       "How much do you like watching violent movies/shows (scale 1-10)";
     const violent_media_survey_item_3 = {
@@ -1842,8 +1893,7 @@
       html: `<label for="item4">${violent_media_survey_item_4_prompt}</label><br><input name="item4" type='number' min=0></input><br>`,
     };
     const violentMediaSurveyTimeline = [
-      violent_media_survey_item_1,
-      violent_media_survey_item_2,
+      violent_media_survey_html_form,
       violent_media_survey_item_3,
       violent_media_survey_item_4,
     ];
@@ -1935,16 +1985,16 @@
       exptTimeline.push(loop_distInstruct_instructions);
       exptTimeline.push(loop_RSVPBlocks_2);
       */
-      exptTimeline.push(picResponseAfterRsvp);
+      //exptTimeline.push(picResponseAfterRsvp);
       /*
       
       // memory test
       exptTimeline.push(if_node_nextBlockMemory);
       exptTimeline.push(if_node_memBlock);
-      */
       // post-trial surveys
       exptTimeline.push(triarchicPsychopathyMeasureEmpathySubscaleTrail);
       exptTimeline.push(horrorTypologySurveyTrial);
+      */
       violentMediaSurveyTimeline.forEach((trial) => exptTimeline.push(trial));
       exptTimeline.push(dass21);
       exptTimeline.push(demographics);
