@@ -160,7 +160,7 @@
       var numMemPics = 28; //This is number of mem trials for each negative/neutral condition (not foils).
       var numFoilPics = 9; //This is per emotion condition - so 9 negative + 9 neutral pics left over to act as foils in the memory task [STEVE: CHANGE THIS AS APPROPRIATE FOR MEMORY TEST]
       var memConditionsTotal = 4; //1 = neg old 2 =  neg_foils, 3 = neut old, 4 = neut foils.
-    } 
+    }
     /*else {
       var trialsPerDistractCond = 4; //PerBlock How many trials per condition (neut/negative)
       var numDistractConditions = 2; // neut and negative in this experiment
@@ -777,14 +777,15 @@
       stimulus: function () {
         typeOfBlock = "EIB";
         var tempTextHTML = " ";
-        var reminderText = "<p>Don't forget that the graphic images you see are staged or fake.</p>";
+        var reminderText =
+          "<p>Don't forget that the graphic images you see are staged or fake.</p>";
         if (blockNum > 0) {
           tempTextHTML +=
             "<p>You're doing well!</p><p>" +
             blockNum +
             " of " +
             numBlocksTotal +
-            " blocks completed</p>"; 
+            " blocks completed</p>";
           tempTextHTML += reminderText;
         }
         tempTextHTML += "<br><p>Press any key when you are ready to begin</p>";
@@ -1078,8 +1079,6 @@
         mWidth +
         ';">' +
         "			<li>A/Prof Steven Most (s.most@unsw.edu.au)</li><li>A/Prof Yue Shi Ai (a.ai@student.unsw.edu.au)</li></ul>" +
-
-        
         '	<p style="text-align:left;line-height:120%;font-size:' +
         smallFontSize +
         ";margin:" +
@@ -1213,7 +1212,8 @@
       timeline_variables: IAPS_preview,
     };
 
-    var alices_wording = "Did you think the unpleasant pictures in this experiment were real? Here is some important information about them before you start the second half of the experiment: All the unpleasant pictures in this experiment are fake or staged. They were created by professional special effects studios and artists, and were collected from their online galleries."
+    var alices_wording =
+      "Did you think the unpleasant pictures in this experiment were real? Here is some important information about them before you start the second half of the experiment: All the unpleasant pictures in this experiment are fake or staged. They were created by professional special effects studios and artists, and were collected from their online galleries.";
 
     // *******************INSTRUCTION-D******************
     var INSTRUCTD = {
@@ -1360,6 +1360,79 @@
       ],
     };
 
+    // DASS21
+    const dass21Questions = [
+      "I found it hard to wind down.",
+      "I was aware of dryness of my mouth.",
+      "I couldn't seem to experience any positive feeling at all.",
+      "I experienced breathing difficulty (e.g., excessively rapid breathing, breathlessness in the absence of physical exertion).",
+      "I found it difficult to work up the initiative to do things.",
+      "I tended to over-react to situations.",
+      "I experienced trembling (e.g., in the hands).",
+      "I felt that I was using a lot of nervous energy.",
+      "I was worried about situations in which I might panic and make a fool of myself.",
+      "I felt that I had nothing to look forward to.",
+      "I found myself getting agitated.",
+      "I found it difficult to relax.",
+      "I felt down-hearted and blue.",
+      "I was intolerant of anything that kept me from getting on with what I was doing.",
+      "I felt I was close to panic.",
+      "I was unable to become enthusiastic about anything.",
+      "I felt I wasn't worth much as a person.",
+      "I felt that I was rather touchy.",
+      "I was aware of the action of my heart in the absence of physical exertion (e.g., sense of heart rate increase, heart missing a beat).",
+      "I felt scared without any good reason.",
+      "I felt that life was meaningless.",
+    ];
+
+    // - 1 because psychologists don't 0 index their measures
+    const subscaleStress = [1, 6, 8, 11, 12, 14, 18].map((i) => `Q${i - 1}`);
+    const subscaleAnxiety = [2, 4, 7, 9, 15, 19, 20].map((i) => `Q${i - 1}`);
+    const subscaleDepression = [3, 5, 10, 13, 16, 17, 21].map(
+      (i) => `Q${i - 1}`
+    );
+
+    function calculateSubscaleScoreDass(subscale) {
+      let subscaleScore = 0;
+      for (const question_key of subscale) {
+        const responses_object = JSON.parse(
+          jsPsych.data.get().last().values()[0]["responses"]
+        );
+        const target_question_response = responses_object[question_key];
+        subscaleScore += target_question_response;
+      }
+      return subscaleScore;
+    }
+
+    const item_1_preamble = `Please read each statement and select the answer which indicates how much the statement
+    applied to you over the past week. There are no right or wrong answers. Do not spend too much
+    time on any statement.`;
+
+    const agreementLabels = [
+      '<div class="agreement-labels">Did not apply to me at all</div>',
+      '<div class="agreement-labels">Applied to me to some degree, or some of the time</div>',
+      '<div class="agreement-labels">Applied to me to a considerable degree or a good part of time</div>',
+      '<div class="agreement-labels">Applied to me very much or most of the time</div>',
+    ];
+
+    let item_1_questions = dass21Questions.map((question) => {
+      return { prompt: question, labels: agreementLabels };
+    });
+
+    const dass21 = {
+      type: "survey-likert",
+      preamble: item_1_preamble,
+      questions: item_1_questions,
+      on_finish: function (data) {
+        data.anxiety = calculateSubscaleScoreDass(subscaleAnxiety);
+        data.depression = calculateSubscaleScoreDass(subscaleDepression);
+        data.stress = calculateSubscaleScoreDass(subscaleStress);
+        console.log(`data.anxiety: ${data.anxiety}`);
+        console.log(`data.depression: ${data.depression}`);
+        console.log(`data.stress: ${data.stress}`);
+      },
+    };
+
     //*************Did they follow instructions**********************
     //To change to percentage of images that participants thought were fake
 
@@ -1464,7 +1537,7 @@
       loop_function: function () {
         blockNum++;
         trialNumInBlock = 0;
-        if (blockNum < (numBlocksTotal / 2) && quitButtonCount < 1) {
+        if (blockNum < numBlocksTotal / 2 && quitButtonCount < 1) {
           return true;
         } else {
           return false;
@@ -1473,16 +1546,16 @@
     };
 
     var loop_RSVPBlocks_2 = {
-        timeline: [nextBlock, loop_RSVPTrials],
-        loop_function: function () {
-          blockNum++;
-          trialNumInBlock = 0;
-          if (blockNum < numBlocksTotal && quitButtonCount < 1) {
-            return true;
-          } else {
-            return false;
-          }
-        },
+      timeline: [nextBlock, loop_RSVPTrials],
+      loop_function: function () {
+        blockNum++;
+        trialNumInBlock = 0;
+        if (blockNum < numBlocksTotal && quitButtonCount < 1) {
+          return true;
+        } else {
+          return false;
+        }
+      },
     };
 
     var loop_memTrials = {
@@ -1821,6 +1894,8 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
+
+      /*
       // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
@@ -1832,7 +1907,7 @@
       exptTimeline.push(preExposurePreamble);
       exptTimeline.push(imagePreExposureProcedure);
       exptTimeline.push(loop_initial_instructions);
-      
+
       // practice trials
       exptTimeline.push(ready_to_start_practice);
       exptTimeline.push(fadeToBlackTrial);
@@ -1841,10 +1916,10 @@
       exptTimeline.push(instr_before_prac_loop);
       exptTimeline.push(fadeToBlackTrial);
       exptTimeline.push(loop_practice_trials);
-      
+
       // rsvp trials
       exptTimeline.push(loop_RSVPBlocks);
-      exptTimeline.push(picResponse)
+      exptTimeline.push(picResponse);
       exptTimeline.push(loop_distInstruct_instructions);
       exptTimeline.push(loop_RSVPBlocks_2);
       exptTimeline.push(picResponseAfterRsvp);
@@ -1855,10 +1930,12 @@
 
       // post-trial surveys
       exptTimeline.push(if_node_percentReal);
+      */
       exptTimeline.push(triarchicPsychopathyMeasureEmpathySubscaleTrail);
       exptTimeline.push(horrorTypologySurveyTrial);
       violentMediaSurveyTimeline.forEach((trial) => exptTimeline.push(trial));
-      exptTimeline.push(demographics)
+      exptTimeline.push(dass21);
+      exptTimeline.push(demographics);
       exptTimeline.push(debrief); //save data here.
       exptTimeline.push({
         type: "fullscreen",
