@@ -799,7 +799,7 @@
             " blocks completed</p>";
           tempTextHTML += reminderText;
         }
-        tempTextHTML += "<br><p>Press any key when you are ready to begin</p>";
+        tempTextHTML += "<br><p>The real experiment will now begin. Press any key when you are ready to start</p>";
 
         return tempTextHTML;
       },
@@ -1036,7 +1036,7 @@
         "			<b>1. What is the research study about?</b><br>" +
         "		You are invited to take part in this research study. The research study aims to investigate how people process rapidly presented images, including unpleasant ones. You have been invited because you are a student taking introductory psychology at UNSW. <br><br>" +
         "			<b>2. Who is conducting this research? </b><br>" +
-        "		The study is being carried out by the following researchers: Associate Professor Steven B. Most and Yue Shi Ai, UNSW Sydney School of Psychology. Research Funder: This research is not funded by any outside agency.<br>" +
+        "		The study is being carried out by the following researchers: Associate Professor Steven B. Most and Honours Student Yue Shi Ai, UNSW Sydney School of Psychology. Research Funder: This research is not funded by any outside agency.<br>" +
         "		Research Funder: This research is not funded by any outside agency. <br><br>" +
         "			<b>3. Inclusion/Exclusion Criteria </b><br>" +
         "		Before you decide to participate in this research study, you should meet the following criteria:<br>" +
@@ -1098,10 +1098,11 @@
         ';">' +
         "	<b> Contact for feelings of distress </b><br>" +
         "	If at any stage during the study, you become distressed or require additional support from someone not involved in the research please call." +
-        " These can be found at the following webpages:" +
-        `<div><a href="https://www.lifeline.org.au/"target="_blank"> Lifeline Australia (13 11 14)</a></div>` +
-        `<div><a href="https://www.beyondblue.org.au/"target="_blank"> Beyond Blue (1300 22 4636)</a></div>` +
-        '			<p style="text-align:left;line-height:120%;font-size:' + //Please add Lifeline Australia (13 11 14, https://www.lifeline.org.au/) and Beyond Blue (1300 22 4636, https://www.beyondblue.org.au/)
+        ' These can be found at the following webpages:'+ 
+        `<ul>` +
+          `<div><a href="https://www.lifeline.org.au/"target="_blank"> Lifeline Australia (13 11 14)</a></div>` +
+          `<div><a href="https://www.beyondblue.org.au/"target="_blank"> Beyond Blue (1300 22 4636)</a></div>` +
+        '			<p style="text-align:left;line-height:120%;font-size:' +
         smallFontSize +
         ";margin:" +
         mWidth +
@@ -1345,18 +1346,18 @@
     };
 
     var percentageOptions = [
-      "0%",
-      "10%",
-      "20%",
-      "30%",
-      "40%",
-      "50%",
-      "60%",
-      "70%",
-      "80%",
-      "90%",
-      "100%",
-    ];
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%",
+    "60%",
+    "70%",
+    "80%",
+    "90%",
+    "100%",
+  ];
 
     const picResponseAfterRsvp = {
       type: "survey-multi-choice",
@@ -1522,8 +1523,8 @@
       stimulus:
         '            <p style="text-align:left;font-size:110%"><b>Demographic information:</b></p>' +
         '			<p style="text-align:left;">You are nearly finished! We need the following information for our records, but it ' +
-        "			is kept completely separate from information about your Prolfic account." + //[STEVE: DELETE REFERENCE TO PROLIFIC]
-        "           As long as you finish the experiment you will get paid no matter what you put here," +
+        "			will remain completely anonymous." + //[STEVE: DELETE REFERENCE TO PROLIFIC]
+        "           As long as you finish the experiment you will receive credit no matter what you put here," +
         "           so please be honest.<br><br>" +
         "			<!-- Gender -->" +
         '           <label for="gender"><b>Gender: &nbsp;</b></label>' +
@@ -1807,7 +1808,7 @@
     }
 
     const horror_typology_item_1_preamble =
-      "The following statements are about how you feel about horror movies. Please rate how much you agree or disagree with the following statements from 1 (Strongly Disagree) to 7 (Strongly Agree).";
+      "The following statements are about how you feel about horror movies. Please rate how much you agree or disagree with the following statements from 'Strongly Disagree' to 'Strongly Agree'.";
 
     const horrorTypologyAgreementLabels = [
       "Strongly Disagree",
@@ -1841,7 +1842,7 @@
     };
 
     const violent_media_survey_item_1_preamble =
-      "Please list the titles of games that you currently play (up to 5)";
+      "Please list the titles of video games that you currently play (up to 5)";
 
     const game_names = ["Game 1", "Game 2", "Game 3", "Game 4", "Game 5"];
 
@@ -1856,7 +1857,7 @@
     };
 
     const violent_media_survey_item_2_preamble =
-      "How often do you play each game (hours/week)";
+      "How often do you play each video game (hours/week)";
     const violent_media_survey_item_2 = {
       type: "survey-text",
       preamble: violent_media_survey_item_2_preamble,
@@ -1873,13 +1874,12 @@
     );
 
     let violent_media_survey_html_form_inputs_1 =
-      violent_media_survey_html_form_text_hours.map(
-        ({ label_text, input_name }) => {
+      violent_media_survey_html_form_text_hours
+        .map(({ label_text, input_name }) => {
           return `<div><label for="${input_name} name">${label_text}</label><br><input name="${input_name} name" type='text'></input></div>`;
-        }
-      );
-    violent_media_survey_html_form_inputs_1 =
-      violent_media_survey_html_form_inputs_1.join("");
+        })
+    violent_media_survey_html_form_inputs_1 = violent_media_survey_html_form_inputs_1.join("");
+
 
     let violent_media_survey_html_form_inputs_2 =
       violent_media_survey_html_form_text_hours
@@ -1898,7 +1898,7 @@
     };
 
     const violent_media_survey_item_3_prompt =
-      "How much do you like watching violent movies/shows (scale 1-10)";
+      "How much do you like watching violent movies/shows (1 - Not at all to 10 - A lot)";
     const violent_media_survey_item_3 = {
       type: "survey-html-form",
       html: `<label for="item3">${violent_media_survey_item_3_prompt}</label><br><input name="item3" type='number' min=1 max=10></input><br>`,
@@ -2007,7 +2007,7 @@
       exptTimeline.push(if_node_nextBlockMemory);
       exptTimeline.push(if_node_memBlock);
       exptTimeline.push(fadeToWhiteTrial);
-      
+
       // post-trial surveys
       exptTimeline.push(triarchicPsychopathyMeasureEmpathySubscaleTrail);
       exptTimeline.push(horrorTypologySurveyTrial);
