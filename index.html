@@ -281,6 +281,13 @@
 
     var stimArray = [];
 
+    // we cut the block numbers in half, so we want to take everything that 
+    // depends on the block number and double it, because we're still using 
+
+    // maybe the cleaner solution is to restore the original studies blocks, but
+    // insert the survey in between the blocks, the way the rerating trials 
+    // are inserted in between the RSVP trials.
+
     var distractID = "none"; // Initialize as 'none' so that it records no distractor during practice
     var targetID = "";
 
@@ -314,15 +321,20 @@
     // first we calculate how many trials we need of each condition for the distractorID selection (which should be 12 trials per distractor condition, per block for the two distractor conditions).
     var numTrialsPerBlock =
       trialsPerDistractCond * numDistractConditions + trialsPerBaselineType; // 12 x 2 = 24 + 6 in this experiment
+    console.log(`numTrialsPerBlock: ${numTrialsPerBlock}`)
+    console.log(`trialsPerDistractCond: ${trialsPerDistractCond}`)
+    console.log(`numDistractConditions: ${numDistractConditions}`)
+    console.log(`trialsPerBaselineType: ${trialsPerBaselineType}`)
 
     //then we calculate how many pics we need to have in each of the two piles. We'll then copy them from the (shuffled) pic arrays.
 
     var maxPicsPerRSVPcond = trialsPerDistractCond * numBlocksTotal; //12 x 2 = 24 pics per pile
+    console.log(`maxPicsPerRSVPcond: ${maxPicsPerRSVPcond}`)
 
     shuffleArray(negFilenames);
     shuffleArray(neutFilenames);
-
-    //console.log(negFilenames);
+    console.log(`negFilenames: ${negFilenames}`);
+    console.log(`neutFilenames: ${neutFilenames}`);
 
     var neg = [];
     var neut = [];
@@ -360,6 +372,7 @@
     }
 
     shuffleArray(trialSelector);
+    console.log(`trialSelector: ${trialSelector}, length: ${trialSelector.length}`)
 
     var last_rsvp_time = 0;
 
@@ -461,7 +474,7 @@
         }
         jsPsych.data.addDataToLastTrial({
           exptPhase: exptPhase,
-          blockNum: 1,
+          blockNum: blockNum + 1,
           blockType: typeOfBlock,
           trialNum: trialNumInBlock + 1,
           trialDistractType: trialDistractType,
@@ -518,7 +531,7 @@
 
         jsPsych.data.addDataToLastTrial({
           exptPhase: exptPhase,
-          blockNum: 2,
+          blockNum: blockNum + 1,
           blockType: typeOfBlock,
           trialNum: trialNumInBlock + 1,
           trialDistractType: trialDistractType,
@@ -1639,9 +1652,9 @@
       },
     };
 
-    var loop_RSVPBlocks = {
-      timeline: [nextBlock, loop_RSVPTrials, picResponse, loop_distInstruct_instructions, nextBlock, loop_RSVPTrials_2],
-      /*
+    blockNum = 0;
+    var loop_RSVPBlocks_first_half = {
+      timeline: [nextBlock, loop_RSVPTrials],
       loop_function: function () {
         blockNum++;
         trialNumInBlock = 0;
@@ -1651,8 +1664,29 @@
           return false;
         }
       },
-      */
     };
+
+    var loop_RSVPBlocks_second_half = {
+      timeline: [nextBlock, loop_RSVPTrials],
+      loop_function: function () {
+        blockNum++;
+        trialNumInBlock = 0;
+        if (blockNum < numBlocksTotal && quitButtonCount < 1) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    };
+
+
+    var rsvp_loop_container = {
+      timeline: [loop_RSVPBlocks_first_half, picResponse, loop_distInstruct_instructions, loop_RSVPBlocks_second_half],
+    };
+
+    var RSVP_trial = {
+      timeline: [rsvp_loop_container],
+    }
 
     var loop_memTrials = {
       timeline: [PressSpacebartrial, runFixation, memoryTaskTrials],
@@ -2043,6 +2077,7 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
+      /*
       // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
@@ -2063,9 +2098,9 @@
       exptTimeline.push(instr_before_prac_loop);
       exptTimeline.push(fadeToBlackTrial);
       exptTimeline.push(loop_practice_trials);
-
+      */
       // rsvp trials
-      exptTimeline.push(loop_RSVPBlocks);
+      exptTimeline.push(RSVP_trial);
       exptTimeline.push(picResponseAfterRsvp);
       
       // memory test
