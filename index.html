@@ -106,7 +106,7 @@
     var dateTime = date + " " + time;
 
     var realVersion = true;
-    var jatosVersion = false;
+    var jatosVersion = true;
     var instructVersion = Math.round(Math.random()); // 0 = no instructions and 1 = given fake/staged instructions
     console.log(instructVersion);
 
@@ -1975,6 +1975,7 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
+      /*
       // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
@@ -2013,6 +2014,7 @@
       exptTimeline.push(horrorTypologySurveyTrial);
       violentMediaSurveyTimeline.forEach((trial) => exptTimeline.push(trial));
       exptTimeline.push(dass21);
+      */
       exptTimeline.push(demographics);
       exptTimeline.push(debrief); //save data here.
       exptTimeline.push({
@@ -2030,7 +2032,7 @@
       toldFakeGroup1Yes0No: instructVersion,
     });
 
-    if (jatosVersion == false) {
+    if (jatosVersion) {
       //start the experiment without jatos wrapping
       jsPsych.init({
         preload_images: imageFilenames,
@@ -2049,39 +2051,45 @@
       });
     } else {
       jatos.onLoad(function () {
-        /* start the experiment with jatos wrapping AND set up the Prolific talk back*/
-        // ---------- subject info ----------
-        var prolific_id = jatos.urlQueryParameters.PROLIFIC_PID; //
-        var completion_url =
-          "https://app.prolific.co/submissions/complete?cc=CDUKJ5BN";
-        var finish_msg =
-          'All done! Please click <a href="' +
-          completion_url +
-          '">here</a> to be returned to Prolific and receive your completion code notification.';
-        // record the subject Num in the jsPsych data (adds property to every trial)
-        jsPsych.data.addProperties({
-          prolificID: prolific_id,
+        sona_id =  jatos.urlQueryParameters.pID;// jsPsych.data.getURLVariable("id");
+        var completion_url = "https://unsw-psy.sona-systems.com/webstudy_credit.aspx?experiment_id=1578&credit_token=5588c60ec4ad47b3b57928e40232ce2f&survey_code=" + sona_id;
+        var finish_msg = 'All done! Please click <a href="' + completion_url + '">here</a> to be returned to Sona and receive your credit';
+        jsPsych.init({
+              preload_images: imageFilenames,
+        display_element: jspsychTargetMLP,
+        timeline: exptTimeline,
+        on_finish: function() {
+          var results = jsPsych.data.get().ignore(['internal_node_id','button_pressed']).csv();
+          jatos.submitResultData(results);
+          document.write('<div id="endscreen" class="endscreen" style="width:1000px"><div class="endscreen" style="text-align:center; border:0px solid; padding:10px; font-size:120%; 						width:800px; float:right"><p><br><br><br>' +finish_msg +'</p></div></div>')
+          }
         });
 
-        jsPsych.init({
-          preload_images: imageFilenames,
-          display_element: jspsychTargetMLP,
-          timeline: exptTimeline,
-          on_finish: function () {
-            var results = jsPsych.data
-              .get()
-              .ignore(["internal_node_id", "button_pressed"])
-              .csv();
-            jatos.submitResultData(results);
-            document.write(
-              '<div id="endscreen" class="endscreen" style="width:1000px"><div class="endscreen" style="text-align:center; border:0px solid; padding:10px; font-size:120%; 						width:800px; float:right"><p><br><br><br>' +
-                finish_msg +
-                "</p></div></div>"
-            );
-          },
-        });
       });
-    }
+      // record the subject Num in the jsPsych data (adds property to every trial)
+      jsPsych.data.addProperties({
+        prolificID: prolific_id,
+      });
+
+      jsPsych.init({
+        preload_images: imageFilenames,
+        display_element: jspsychTargetMLP,
+        timeline: exptTimeline,
+        on_finish: function () {
+          var results = jsPsych.data
+            .get()
+            .ignore(["internal_node_id", "button_pressed"])
+            .csv();
+          jatos.submitResultData(results);
+          document.write(
+            '<div id="endscreen" class="endscreen" style="width:1000px"><div class="endscreen" style="text-align:center; border:0px solid; padding:10px; font-size:120%; 						width:800px; float:right"><p><br><br><br>' +
+              finish_msg +
+              "</p></div></div>"
+          );
+        },
+      });
+
+    };
 
     // start the experiment with jatos wrapping
     /*
