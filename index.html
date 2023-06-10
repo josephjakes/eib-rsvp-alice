@@ -2032,7 +2032,7 @@
       toldFakeGroup1Yes0No: instructVersion,
     });
 
-    if (jatosVersion) {
+    if (!jatosVersion) {
       //start the experiment without jatos wrapping
       jsPsych.init({
         preload_images: imageFilenames,
