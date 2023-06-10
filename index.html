@@ -139,7 +139,7 @@
     var quitPlease;
 
     if (realVersion) {
-      var trialsPerDistractCond = 4; //PerBlock How many trials per condition (14 x neut/14 x negative) x 2 blocks [STEVE: CHANGE THIS IF WE ARE GOING TO CHANGE NUMBER OF STIMULI PER CONDITION]
+      var trialsPerDistractCond = 14; //PerBlock How many trials per condition (14 x neut/14 x negative) x 2 blocks [STEVE: CHANGE THIS IF WE ARE GOING TO CHANGE NUMBER OF STIMULI PER CONDITION]
       var numDistractConditions = 2; // neut and negative in this experiment.
       var trialsPerBaselineType = 7; // PerBlock How many baseline trials
       var initialPauseDuration = 1000; // 1000
@@ -2043,7 +2043,6 @@
     //exptTimeline.push(if_node_picQDemo);
 
     if (usingComputer) {
-      /*
       // intro
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
@@ -2066,10 +2065,8 @@
       exptTimeline.push(loop_practice_trials);
 
       // rsvp trials
-      */
       exptTimeline.push(loop_RSVPBlocks);
       exptTimeline.push(picResponseAfterRsvp);
-      /*
       
       // memory test
       exptTimeline.push(if_node_nextBlockMemory);
@@ -2087,7 +2084,6 @@
         type: "fullscreen",
         fullscreen_mode: false,
       });
-      */
     } else {
       exptTimeline.push(using_mobile_device);
     }
