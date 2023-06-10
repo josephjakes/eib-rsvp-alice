@@ -1485,7 +1485,7 @@
           jsPsych.data.get().last().values()[0]["responses"]
         );
         const target_question_response = responses_object[question_key];
-        if (target_question_response === "not all questions answered") {
+        if (target_question_response === "") {
           found_null_response_flag = true;
           break;
         }
