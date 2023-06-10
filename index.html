@@ -18,6 +18,7 @@
     <script src="./js/plugins/jspsych-survey-text.js"></script>
     <script src="./js/plugins/jspsych-survey-likert.js"></script>
     <script src="./js/plugins/jspsych-survey-html-form.js"></script>
+    <script src="jatos.js"></script>
     <script src="./js/welcome.js"></script>
     <link href="./js/css/jspsych.css" rel="stylesheet" type="text/css" />
 
@@ -106,7 +107,6 @@
     var dateTime = date + " " + time;
 
     var realVersion = true;
-    var jatosVersion = true;
     var instructVersion = Math.round(Math.random()); // 0 = no instructions and 1 = given fake/staged instructions
     console.log(instructVersion);
 
@@ -115,18 +115,6 @@
     var resultsID = 0;
 
     var winWidth = 800; //800
-
-    const actualLagTypes = [2, 4]; //Actually only lag 2 [Steve: change this later]
-    let lag_types_by_trial = [];
-    for (let i = 0; i < trialsPerDistractCond; i++) {
-      lag_types_by_trial.push(actualLagTypes[0]);
-      lag_types_by_trial.push(actualLagTypes[1]);
-    }
-    for (let i = 0; i < trialsPerBaselineType / 2; i++) {
-      lag_types_by_trial.push(actualLagTypes[0]);
-      lag_types_by_trial.push(actualLagTypes[1]);
-    }
-    lag_types_by_trial = jsPsych.randomization.shuffle(lag_types_by_trial);
 
     var focusCheckInterval = 1000;
 
@@ -151,7 +139,7 @@
     var quitPlease;
 
     if (realVersion) {
-      var trialsPerDistractCond = 14; //PerBlock How many trials per condition (14 x neut/14 x negative) x 2 blocks [STEVE: CHANGE THIS IF WE ARE GOING TO CHANGE NUMBER OF STIMULI PER CONDITION]
+      var trialsPerDistractCond = 4; //PerBlock How many trials per condition (14 x neut/14 x negative) x 2 blocks [STEVE: CHANGE THIS IF WE ARE GOING TO CHANGE NUMBER OF STIMULI PER CONDITION]
       var numDistractConditions = 2; // neut and negative in this experiment.
       var trialsPerBaselineType = 7; // PerBlock How many baseline trials
       var initialPauseDuration = 1000; // 1000
@@ -171,7 +159,7 @@
       var numFoilPics = 9; //This is per emotion condition - so 9 negative + 9 neutral pics left over to act as foils in the memory task [STEVE: CHANGE THIS AS APPROPRIATE FOR MEMORY TEST]
       var memConditionsTotal = 4; //1 = neg old 2 =  neg_foils, 3 = neut old, 4 = neut foils.
     }
-    /*else {
+    else {
       var trialsPerDistractCond = 4; //PerBlock How many trials per condition (neut/negative)
       var numDistractConditions = 2; // neut and negative in this experiment
       var trialsPerBaselineType = 2; // PerBlock How many baseline trials
@@ -191,7 +179,20 @@
       var numMemPics = 8; //so 8 each of neg/neutral x old/new
       var numFoilPics = 8; // use 24 negative and 24 neutral pics as foils
       var memConditionsTotal = 4; //1 = neg old 2 =  neg_foils, 3 = neut old, 4 = neut foils.
-    }*/
+    }
+
+    const actualLagTypes = [2, 4]; //Actually only lag 2 [Steve: change this later]
+    let lag_types_by_trial = [];
+    for (let i = 0; i < trialsPerDistractCond; i++) {
+      lag_types_by_trial.push(actualLagTypes[0]);
+      lag_types_by_trial.push(actualLagTypes[1]);
+    }
+    for (let i = 0; i < trialsPerBaselineType / 2; i++) {
+      lag_types_by_trial.push(actualLagTypes[0]);
+      lag_types_by_trial.push(actualLagTypes[1]);
+    }
+    lag_types_by_trial = jsPsych.randomization.shuffle(lag_types_by_trial);
+    console.log("inital value for lag_types_by_trial: ", lag_types_by_trial);
 
     var pracStdDur = [];
     var pracDisDur = [];
@@ -458,15 +459,71 @@
         } else {
           trialCorrect = 0;
         }
-
         jsPsych.data.addDataToLastTrial({
           exptPhase: exptPhase,
-          blockNum: blockNum + 1,
+          blockNum: 1,
           blockType: typeOfBlock,
           trialNum: trialNumInBlock + 1,
           trialDistractType: trialDistractType,
           trialDistractPos: trialDistractPos,
-          trialLag: trialLag,
+          trialLag: lag_types_by_trial[trialNumInBlock],
+          RSVPtrialResp: RSVPresp,
+          RSVPTrialCorrect: trialCorrect,
+          trialTargetType: trialTargetType,
+          distractID: distractID,
+          targetID: targetID,
+          rsvp_time: last_rsvp_time,
+        });
+      },
+    };
+
+    var runRSVPresponse_2 = {
+      type: "categorize-image",
+      stimulus: "images/response_prompt.png",
+      choices: [37, 39, 81],
+
+      key_answer: function () {
+        correctKeyCode = 37;
+        if (trialTargetType == 1) {
+          correctKeyCode = 39;
+        }
+        return correctKeyCode;
+      },
+
+      correct_text: function () {
+        return "<p style='font-size:140%;'>correct</p>";
+      },
+
+      incorrect_text: function () {
+        return "<p style='font-size:140%;'>incorrect</p>";
+      },
+
+      show_stim_with_feedback: false,
+      feedback_duration: feedbackDuration,
+      post_trial_gap: itiDuration,
+
+      on_finish: function (trial_data) {
+        RSVPresp = trial_data.key_press;
+        if (trial_data.key_press == 81) {
+          quitButtonCount = 1;
+          quitPlease = true;
+          console.log(quitButtonCount);
+        } else if (trial_data.key_press == 39 && trialTargetType == 1) {
+          trialCorrect = 1;
+        } else if (trial_data.key_press == 37 && trialTargetType == 0) {
+          trialCorrect = 1;
+        } else {
+          trialCorrect = 0;
+        }
+
+        jsPsych.data.addDataToLastTrial({
+          exptPhase: exptPhase,
+          blockNum: 2,
+          blockType: typeOfBlock,
+          trialNum: trialNumInBlock + 1,
+          trialDistractType: trialDistractType,
+          trialDistractPos: trialDistractPos,
+          trialLag: lag_types_by_trial[trialNumInBlock],
           RSVPtrialResp: RSVPresp,
           RSVPTrialCorrect: trialCorrect,
           trialTargetType: trialTargetType,
@@ -1422,14 +1479,23 @@
 
     function calculateSubscaleScoreDass(subscale) {
       let subscaleScore = 0;
+      let found_null_response_flag = false;
       for (const question_key of subscale) {
         const responses_object = JSON.parse(
           jsPsych.data.get().last().values()[0]["responses"]
         );
         const target_question_response = responses_object[question_key];
+        if (target_question_response === "not all questions answered") {
+          found_null_response_flag = true;
+          break;
+        }
         subscaleScore += target_question_response;
       }
-      return subscaleScore;
+      if (found_null_response_flag) {
+        return "not all questions answered";
+      } else {
+        return subscaleScore;
+      }
     }
 
     const item_1_preamble = `Please read each statement and select the answer which indicates how much the statement
@@ -1560,8 +1626,22 @@
       },
     };
 
+    var loop_RSVPTrials_2 = {
+      timeline: [runFixation, runRSVPtrial, runRSVPresponse_2],
+
+      loop_function: function () {
+        trialNumInBlock++;
+        if (trialNumInBlock < numTrialsPerBlock * numBlocksTotal && quitButtonCount < 1) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    };
+
     var loop_RSVPBlocks = {
-      timeline: [nextBlock, loop_RSVPTrials],
+      timeline: [nextBlock, loop_RSVPTrials, picResponse, loop_distInstruct_instructions, nextBlock, loop_RSVPTrials_2],
+      /*
       loop_function: function () {
         blockNum++;
         trialNumInBlock = 0;
@@ -1571,19 +1651,7 @@
           return false;
         }
       },
-    };
-
-    var loop_RSVPBlocks_2 = {
-      timeline: [nextBlock, loop_RSVPTrials],
-      loop_function: function () {
-        blockNum++;
-        trialNumInBlock = 0;
-        if (blockNum < numBlocksTotal && quitButtonCount < 1) {
-          return true;
-        } else {
-          return false;
-        }
-      },
+      */
     };
 
     var loop_memTrials = {
@@ -1998,11 +2066,10 @@
       exptTimeline.push(loop_practice_trials);
 
       // rsvp trials
+      */
       exptTimeline.push(loop_RSVPBlocks);
-      exptTimeline.push(picResponse);
-      exptTimeline.push(loop_distInstruct_instructions);
-      exptTimeline.push(loop_RSVPBlocks_2);
       exptTimeline.push(picResponseAfterRsvp);
+      /*
       
       // memory test
       exptTimeline.push(if_node_nextBlockMemory);
@@ -2014,13 +2081,13 @@
       exptTimeline.push(horrorTypologySurveyTrial);
       violentMediaSurveyTimeline.forEach((trial) => exptTimeline.push(trial));
       exptTimeline.push(dass21);
-      */
       exptTimeline.push(demographics);
-      exptTimeline.push(debrief); //save data here.
+      exptTimeline.push(debrief); 
       exptTimeline.push({
         type: "fullscreen",
         fullscreen_mode: false,
       });
+      */
     } else {
       exptTimeline.push(using_mobile_device);
     }
@@ -2032,6 +2099,7 @@
       toldFakeGroup1Yes0No: instructVersion,
     });
 
+    const jatosVersion = true;
     if (!jatosVersion) {
       //start the experiment without jatos wrapping
       jsPsych.init({
@@ -2051,7 +2119,7 @@
       });
     } else {
       jatos.onLoad(function () {
-        sona_id =  jatos.urlQueryParameters.pID;// jsPsych.data.getURLVariable("id");
+        const sona_id =  jatos.urlQueryParameters.pID;// jsPsych.data.getURLVariable("id");
         var completion_url = "https://unsw-psy.sona-systems.com/webstudy_credit.aspx?experiment_id=1578&credit_token=5588c60ec4ad47b3b57928e40232ce2f&survey_code=" + sona_id;
         var finish_msg = 'All done! Please click <a href="' + completion_url + '">here</a> to be returned to Sona and receive your credit';
         jsPsych.init({
@@ -2066,11 +2134,6 @@
         });
 
       });
-      // record the subject Num in the jsPsych data (adds property to every trial)
-      jsPsych.data.addProperties({
-        prolificID: prolific_id,
-      });
-
       jsPsych.init({
         preload_images: imageFilenames,
         display_element: jspsychTargetMLP,
@@ -2088,9 +2151,7 @@
           );
         },
       });
-
     };
-
     // start the experiment with jatos wrapping
     /*
       jatos.onLoad(function () {
