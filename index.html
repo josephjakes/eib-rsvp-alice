@@ -106,7 +106,7 @@
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + " " + time;
 
-    var realVersion = true;
+    var realVersion = false;
     var instructVersion = Math.round(Math.random()); // 0 = no instructions and 1 = given fake/staged instructions
     console.log(instructVersion);
 
@@ -397,6 +397,11 @@
           neutcounter++;
         } else if (trialDistractType == 3) {
           distractID = standardFilenames[itemsPerStream];
+        }
+        if (blockNum == 0) {
+          window.first_block_images.push(distractID);
+        } else if (blockNum == 1) {
+          window.second_block_images.push(distractID);
         }
 
         stimArray[itemsPerStream] = distractID;
@@ -941,6 +946,16 @@
         "<p> When you are ready: push spacebar to view the next image.</p><p> It will only show for one second</p>",
     };
 
+    function get_memory_trial_eib_block_number(distractor_path) {
+      if (window.first_block_images.includes(distractor_path)) {
+        return 1;
+      } else if (window.second_block_images.includes(distractor_path)) {
+        return 2;
+      } else {
+        return "foil";
+      }
+    }
+
     var memoryTaskTrials = {
       type: "categorize-image",
       prompt:
@@ -1000,6 +1015,8 @@
         exptPhase = 2;
         typeOfBlock = "memoryTask";
 
+        
+        const eib_block = get_memory_trial_eib_block_number(memPic)
         jsPsych.data.addDataToLastTrial({
           exptPhase: exptPhase,
           blockNum: memBlockNum + 1,
@@ -1009,6 +1026,7 @@
           distractID: memPic,
           correctResp: correctKeyCode,
           memTrialCorrect: trialCorrect,
+          eib_block: eib_block,
         });
       },
     };
@@ -1625,7 +1643,8 @@
     };
 
     // ******************* MAIN LOOPS ******************
-
+    window.first_block_images = [];
+    window.second_block_images = [];
     var loop_RSVPTrials = {
       timeline: [runFixation, runRSVPtrial, runRSVPresponse],
 
@@ -2078,6 +2097,7 @@
 
     if (usingComputer) {
       // intro
+      /*
       exptTimeline.push(welcome1);
       exptTimeline.push(welcome2);
 
@@ -2097,6 +2117,7 @@
       exptTimeline.push(instr_before_prac_loop);
       exptTimeline.push(fadeToBlackTrial);
       exptTimeline.push(loop_practice_trials);
+      */
       // rsvp trials
       exptTimeline.push(RSVP_trial);
       exptTimeline.push(picResponseAfterRsvp);
@@ -2106,6 +2127,7 @@
       exptTimeline.push(if_node_memBlock);
       exptTimeline.push(fadeToWhiteTrial);
 
+      /*
       // post-trial surveys
       exptTimeline.push(triarchicPsychopathyMeasureEmpathySubscaleTrail);
       exptTimeline.push(horrorTypologySurveyTrial);
@@ -2117,6 +2139,7 @@
         type: "fullscreen",
         fullscreen_mode: false,
       });
+      */
     } else {
       exptTimeline.push(using_mobile_device);
     }
@@ -2125,10 +2148,9 @@
     jsPsych.data.addProperties({
       subNum: subject_id,
       DateTime: dateTime,
-      toldFakeGroup1Yes0No: instructVersion,
     });
 
-    const jatosVersion = true;
+    const jatosVersion = false;
     if (!jatosVersion) {
       //start the experiment without jatos wrapping
       jsPsych.init({
@@ -2156,6 +2178,9 @@
               display_element: jspsychTargetMLP,
               timeline: exptTimeline,
         on_finish: function() {
+          jsPsych.data.addProperties({
+            sona_id: sona_id,
+          });
           var results = jsPsych.data.get().ignore(['internal_node_id','button_pressed']).csv();
           jatos.submitResultData(results);
           document.write('<div id="endscreen" class="endscreen" style="width:1000px"><div class="endscreen" style="text-align:center; border:0px solid; padding:10px; font-size:120%; 						width:800px; float:right"><p><br><br><br>' +finish_msg +'</p></div></div>')
