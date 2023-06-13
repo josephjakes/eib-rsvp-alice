@@ -956,6 +956,16 @@
       }
     }
 
+    function get_lag_type_of_eib_block(distractor_path) {
+      if (window.lag_2.includes(distractor_path)) {
+        return 2;
+      } else if (window.lag_4.includes(distractor_path)) {
+        return 4;
+      } else {
+        return "foil";
+      }
+    }
+
     var memoryTaskTrials = {
       type: "categorize-image",
       prompt:
@@ -1017,6 +1027,7 @@
 
         
         const eib_block = get_memory_trial_eib_block_number(memPic)
+        const lag_type = get_lag_type_of_eib_block(memPic)
         jsPsych.data.addDataToLastTrial({
           exptPhase: exptPhase,
           blockNum: memBlockNum + 1,
@@ -1027,6 +1038,7 @@
           correctResp: correctKeyCode,
           memTrialCorrect: trialCorrect,
           eib_block: eib_block,
+          lag_type: lag_type,
         });
       },
     };
@@ -1645,6 +1657,8 @@
     // ******************* MAIN LOOPS ******************
     window.first_block_images = [];
     window.second_block_images = [];
+    window.lag_2 = [];
+    window.lag_4 = [];
     var loop_RSVPTrials = {
       timeline: [runFixation, runRSVPtrial, runRSVPresponse],
 
