@@ -106,7 +106,7 @@
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + " " + time;
 
-    var realVersion = false;
+    var realVersion = true;
     var instructVersion = Math.round(Math.random()); // 0 = no instructions and 1 = given fake/staged instructions
     console.log(instructVersion);
 
@@ -2168,7 +2168,7 @@
       DateTime: dateTime,
     });
 
-    const jatosVersion = false;
+    const jatosVersion = true;
     if (!jatosVersion) {
       //start the experiment without jatos wrapping
       jsPsych.init({
