@@ -477,6 +477,14 @@
         } else {
           trialCorrect = 0;
         }
+
+        const lag_type = lag_types_by_trial[trialNumInBlock]
+        if (lag_type==2) {
+          window.lag_2.push(distractID)
+        } else if (lag_type==4) {
+          window.lag_4.push(distractID)
+        }
+
         jsPsych.data.addDataToLastTrial({
           exptPhase: exptPhase,
           blockNum: blockNum + 1,
