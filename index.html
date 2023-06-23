@@ -181,15 +181,13 @@
       var memConditionsTotal = 4; //1 = neg old 2 =  neg_foils, 3 = neut old, 4 = neut foils.
     }
 
-    const actualLagTypes = [2, 4]; //Actually only lag 2 [Steve: change this later]
+    const actualLagTypes = [2]; //Actually only lag 2 [Steve: change this later]
     // balance lag types across each trial condition
     let lag_types_for_emotive_trials = [];
     let lag_types_for_neutral_trials = [];
-    for (let i = 0; i < trialsPerDistractCond; i++) {
+    for (let i = 0; i < trialsPerDistractCond * 2; i++) {
       lag_types_for_emotive_trials.push(actualLagTypes[0]);
-      lag_types_for_emotive_trials.push(actualLagTypes[1]);
       lag_types_for_neutral_trials.push(actualLagTypes[0]);
-      lag_types_for_neutral_trials.push(actualLagTypes[1]);
     }
     lag_types_for_emotive_trials = jsPsych.randomization.shuffle(
       lag_types_for_emotive_trials
