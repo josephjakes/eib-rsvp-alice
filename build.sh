@@ -1,0 +1,1 @@
+cp index.html /Applications/jatos/study_assets_root/media_and_attention_v1.5/index.html
