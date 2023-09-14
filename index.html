@@ -109,7 +109,7 @@
         today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + " " + time;
 
-    var realVersion = true;
+    var realVersion = false;
     var instructVersion = Math.round(Math.random()); // 0 = no instructions and 1 = given fake/staged instructions
     console.log(instructVersion);
 
@@ -2198,7 +2198,7 @@
     });
 
     console.log("version v1.5.3")
-    const jatosVersion = false;
+    const jatosVersion = true;
     if (!jatosVersion) {
         //start the experiment without jatos wrapping
         jsPsych.init({
@@ -2219,8 +2219,8 @@
     } else {
         jatos.onLoad(function() {
             console.log("jatos loaded")
-                //const sona_id =  jatos.urlQueryParameters.pID;
-            const sona_id = "5397886"
+            const sona_id = jatos.urlQueryParameters.pID;
+            //const sona_id = "5397886"
             const completion_url = `https://unsw-psy.sona-systems.com/webstudy_credit.aspx?experiment_id=2006&credit_token=60775a0e58414a9ba8393b74ea5bda55&survey_code=${sona_id}`;
 
             var finish_msg = `All done! Please wait to be returned to Sona and receive your credit`;
